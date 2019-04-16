@@ -8,6 +8,7 @@
     <color name="dark_red">#bb0100</color>
     <color name="darkest_red">#9e0100</color>
     <color name="black">#333333</color>
+    <color name="text_black">#262626</color>
     <color name="text_red">#FE4040</color>
     <color name="yellow">#FFBA00</color>
     <color name="faint_grey">#8e8e8e</color>

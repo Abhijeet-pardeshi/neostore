@@ -2,6 +2,7 @@ package com.neosoft.neostoreapp.view.activity
 
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
@@ -13,12 +14,14 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.neosoft.neostoreapp.R
 import com.neosoft.neostoreapp.utils.DrawerLocker
+import com.neosoft.neostoreapp.view.fragment.DashboardFragment
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.toolbar_home.*
 
 class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, DrawerLocker {
-    private var backStackChangeListener: FragmentManager.OnBackStackChangedListener = FragmentManager.OnBackStackChangedListener {
-    }
+    private var backStackChangeListener: FragmentManager.OnBackStackChangedListener =
+        FragmentManager.OnBackStackChangedListener {
+        }
 
     lateinit var toggle: ActionBarDrawerToggle
     private var isToolbarNavigationRegistered: Boolean = false
@@ -27,6 +30,9 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
+        supportFragmentManager.beginTransaction().add(R.id.container,DashboardFragment()).commit()
+
         Log.d("Status", "onCreate")
         drawerLayout = findViewById(R.id.drawer_layout)
         setSupportActionBar(toolbar)
@@ -39,7 +45,7 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         //switching between ham burger(drawer toggle and back button)
         supportFragmentManager.addOnBackStackChangedListener {
-            if (supportFragmentManager.backStackEntryCount > 0){
+            if (supportFragmentManager.backStackEntryCount > 0) {
                 toggle.isDrawerIndicatorEnabled = false
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 toggle.setToolbarNavigationClickListener { onBackPressed() }
@@ -53,11 +59,19 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         nav_view.setNavigationItemSelectedListener(this)
     }
 
+    override fun onStart() {
+        super.onStart()
+    }
+
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+//            if (getCurrentVisibleFragment() is DashboardFragment){
+//                val dashboardFragment = getCurrentVisibleFragment() as DashboardFragment
+//                dashboardFragment.autoSwipeImages()
+//            }
         }
     }
 
@@ -148,7 +162,19 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onDestroy() {
         super.onDestroy()
 
-        getSharedPreferences("MyPreferences",0).edit().clear().apply()
+        getSharedPreferences("MyPreferences", 0).edit().clear().apply()
+    }
+
+
+    private fun getCurrentVisibleFragment(): Fragment {
+        val fragments = this.supportFragmentManager.fragments
+        var visibleFragment: Fragment?= null
+        fragments.forEach { fragment ->
+            if (fragment != null && fragment.isVisible) {
+                visibleFragment = fragment
+            }
+        }
+        return visibleFragment!!
     }
 }
 

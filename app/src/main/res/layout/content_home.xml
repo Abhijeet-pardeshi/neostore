@@ -9,11 +9,4 @@
         android:id="@+id/container"
         tools:context=".view.activity.DashBoardActivity">
 
-    <fragment
-            android:id="@+id/homeFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            class="com.neosoft.neostoreapp.view.fragment.DashboardFragment"
-            tools:layout="@layout/fragment_dashboard"/>
-
 </FrameLayout>

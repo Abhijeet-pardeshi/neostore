@@ -3,7 +3,32 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:background="@color/white"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" android:orientation="vertical">
+
+    <LinearLayout
+            android:layout_marginStart="13dp"
+            android:layout_marginEnd="13dp"
+            android:layout_gravity="top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/txt_title_detail"
+                android:textColor="@color/text_black"
+                android:fontFamily="@font/gotham_medium"
+                android:textSize="35sp"
+                android:text="This is title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/txt_category_detail"
+                android:layout_width="match_parent"
+                android:textSize="30sp"
+
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
     <LinearLayout
             android:layout_marginStart="13dp"
@@ -16,7 +41,7 @@
             android:orientation="horizontal">
 
         <Button
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="6dp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -26,12 +51,11 @@
 
         <Button
                 android:background="@drawable/btn_custom_grey_bg"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="6dp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/buy_now"
-                android:textColor="@color/white"/>
+                android:text="@string/buy_now"/>
 
     </LinearLayout>
 

@@ -14,14 +14,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.neosoft.neostoreapp.R
-import com.neosoft.neostoreapp.model.response.ProductResponse
 import com.neosoft.neostoreapp.utils.Constants
 import com.neosoft.neostoreapp.view.adapter.DashboardAdapter
 import com.neosoft.neostoreapp.view.adapter.DashViewPagerAdapter
 import com.neosoft.neostoreapp.viewmodel.ProductViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class DashboardFragment : Fragment(), DashboardAdapter.OnDashboardClickListener {
 
@@ -84,8 +82,8 @@ class DashboardFragment : Fragment(), DashboardAdapter.OnDashboardClickListener 
 
         tl_dots.setupWithViewPager(viewPager, true)
 
-        productViewModel.getProductListResponse().observe(this, Observer<ProductResponse> { t ->
-        })
+//        productViewModel.getProductListResponse().observe(this, Observer<ProductResponse> { t ->
+//        })
     }
 
     override fun onDashBoardClicked(pos: Int) {
@@ -145,7 +143,7 @@ class DashboardFragment : Fragment(), DashboardAdapter.OnDashboardClickListener 
         Log.d("State", "onDetach")
     }
 
-    private fun autoSwipeImages(){
+    fun autoSwipeImages(){
         Log.d("TAG","AUTO SWIPE")
         swipeTimer = Timer()
         swipeTimer.schedule(object : TimerTask() {
