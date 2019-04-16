@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        android:paddingTop="6dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+    <TextView
+            android:fontFamily="@font/gotham_book"
+            android:id="@+id/tv_cart_badge_count"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:text="@string/_0"
+            android:textSize="15sp"
+            android:visibility="visible"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/cart_badge_bg"/>
+
+</FrameLayout>

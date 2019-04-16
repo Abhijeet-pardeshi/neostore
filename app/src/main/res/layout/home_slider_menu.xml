@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ImageView
+            android:scaleType="centerCrop"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/nav_icon_home"/>
+
+    <TextView
+            android:id="@+id/nav_icon_title"
+            android:gravity="center_vertical"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:hint="@string/nav_title"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/nav_cart_items"/>
+
+</LinearLayout>
