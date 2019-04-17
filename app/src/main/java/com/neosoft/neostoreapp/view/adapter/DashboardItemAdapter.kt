@@ -3,15 +3,14 @@ package com.neosoft.neostoreapp.view.adapter
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.*
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.neosoft.neostoreapp.R
 
-class DashboardAdapter(private var context: Context, var productsList: ArrayList<Int>) :
-    RecyclerView.Adapter<DashboardAdapter.ProductHolder>() {
+class DashboardItemAdapter(private var context: Context, var productsList: ArrayList<Int>) :
+    RecyclerView.Adapter<DashboardItemAdapter.ProductHolder>() {
 
     interface OnDashboardClickListener {
         fun onDashBoardClicked(pos: Int)

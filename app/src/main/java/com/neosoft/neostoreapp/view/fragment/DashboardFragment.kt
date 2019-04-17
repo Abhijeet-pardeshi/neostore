@@ -1,6 +1,5 @@
 package com.neosoft.neostoreapp.view.fragment
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.SharedPreferences
@@ -15,16 +14,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.neosoft.neostoreapp.R
 import com.neosoft.neostoreapp.utils.Constants
-import com.neosoft.neostoreapp.view.adapter.DashboardAdapter
+import com.neosoft.neostoreapp.view.adapter.DashboardItemAdapter
 import com.neosoft.neostoreapp.view.adapter.DashViewPagerAdapter
 import com.neosoft.neostoreapp.viewmodel.ProductViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import java.util.*
 
-class DashboardFragment : Fragment(), DashboardAdapter.OnDashboardClickListener {
+class DashboardFragment : Fragment(), DashboardItemAdapter.OnDashboardClickListener {
 
     private var sliderImages = intArrayOf(R.drawable.slider_img1, R.drawable.slider_img2, R.drawable.slider_img3, R.drawable.slider_img4)
-    private var productImages = arrayListOf(R.drawable.tableicon, R.drawable.sofaicon, R.drawable.chairsicon, R.drawable.cupboardicon)
+    private var productImages = arrayListOf(R.drawable.tableicon, R.drawable.chairsicon, R.drawable.sofaicon, R.drawable.cupboardicon)
     private lateinit var productViewModel: ProductViewModel
     lateinit var swipeTimer: Timer
     var currentImage = 0
@@ -62,7 +61,7 @@ class DashboardFragment : Fragment(), DashboardAdapter.OnDashboardClickListener 
         val viewPagerAdapter = DashViewPagerAdapter(context!!, sliderImages)
         viewPager.adapter = viewPagerAdapter
 
-        val dashboardAdapter = DashboardAdapter(context!!, productImages)
+        val dashboardAdapter = DashboardItemAdapter(context!!, productImages)
         rv_products_home.layoutManager = GridLayoutManager(context!!, 2)
         rv_products_home.adapter = dashboardAdapter
         dashboardAdapter.setProductClickListener(this)

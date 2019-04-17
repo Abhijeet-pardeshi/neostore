@@ -42,4 +42,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="buy_now">BUY NOW</string>
     <string name="rate">RATE</string>
+    <string name="total">TOTAL</string>
+    <string name="rupees_symbol">₹</string>
+    <string name="order_now">ORDER NOW</string>
 </resources>

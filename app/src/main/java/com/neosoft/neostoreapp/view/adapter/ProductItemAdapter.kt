@@ -12,7 +12,7 @@ import com.neosoft.neostoreapp.R
 import com.neosoft.neostoreapp.model.response.ProductResponseData
 import com.squareup.picasso.Picasso
 
-class ProductAdapter(var tablesList: ArrayList<ProductResponseData>, var context: Context): RecyclerView.Adapter<ProductAdapter.TableViewHolder>() {
+class ProductItemAdapter(var tablesList: ArrayList<ProductResponseData>, var context: Context): RecyclerView.Adapter<ProductItemAdapter.TableViewHolder>() {
 
     interface OnProductClickListener{
         fun onProductClicked(pos: Int)

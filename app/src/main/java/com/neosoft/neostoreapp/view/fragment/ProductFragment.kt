@@ -14,15 +14,17 @@ import android.view.ViewGroup
 import com.neosoft.neostoreapp.R
 import com.neosoft.neostoreapp.model.response.ProductResponse
 import com.neosoft.neostoreapp.model.response.ProductResponseData
-import com.neosoft.neostoreapp.view.adapter.ProductAdapter
+import com.neosoft.neostoreapp.utils.Constants
+import com.neosoft.neostoreapp.view.adapter.ProductItemAdapter
 import com.neosoft.neostoreapp.viewmodel.ProductViewModel
 import kotlinx.android.synthetic.main.fragment_product.*
 
-class ProductFragment : Fragment(),ProductAdapter.OnProductClickListener {
+class ProductFragment : Fragment(),ProductItemAdapter.OnProductClickListener {
 
     private var productResponseData: ProductResponseData? = null
     private var productsList: ArrayList<ProductResponseData> = arrayListOf()
     private lateinit var productViewModel: ProductViewModel
+    private lateinit var productAdapter: ProductItemAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +43,7 @@ class ProductFragment : Fragment(),ProductAdapter.OnProductClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val productAdapter = ProductAdapter(productsList, context!!)
+        productAdapter = ProductItemAdapter(productsList, context!!)
         rv_products.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = productAdapter
@@ -49,6 +51,10 @@ class ProductFragment : Fragment(),ProductAdapter.OnProductClickListener {
 
         productAdapter.setProductClickListener(this)
 
+        getProductList()
+    }
+
+    private fun getProductList() {
         productViewModel.getProductListResponse().observe(this, Observer<ProductResponse> { t ->
             Log.d("Status", "getting Products")
 //            Log.d("Products", t.toString())
@@ -65,6 +71,11 @@ class ProductFragment : Fragment(),ProductAdapter.OnProductClickListener {
 
     override fun onProductClicked(pos: Int) {
         val detailFragment = DetailFragment()
+        val productId = productsList[pos].id
+        val bundle = Bundle()
+        productId?.toInt()?.let {prodId->
+            bundle.putInt(Constants.PRODUCT_ID, prodId) }
+        detailFragment.arguments = bundle
 
         fragmentManager
             ?.beginTransaction()
