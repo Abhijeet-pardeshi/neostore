@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/rv_cart_fragment"
+            android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+            android:id="@+id/rl_total_container"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_width="match_parent" 
+            android:layout_height="70dp"
+            android:gravity="center_vertical"
+            android:layout_below="@id/rv_cart_fragment">
+
+        <TextView
+                android:fontFamily="@font/gotham_medium"
+                android:id="@+id/txt_total_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:textColor="#333333"
+                android:layout_toStartOf="@id/txt_rupees_symbol"
+                android:textSize="30sp"
+                android:text="@string/total"/>
+
+        <TextView
+                android:fontFamily="@font/gotham_medium"
+                android:id="@+id/txt_rupees_symbol"
+                android:layout_toStartOf="@id/txt_total_price_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="30sp"
+                android:text="@string/rupees_symbol"/>
+
+        <TextView
+                android:fontFamily="@font/gotham_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_total_price_cart"
+                android:layout_alignParentEnd="true"
+                android:textColor="#333333"
+                android:textSize="30sp"
+                android:text="180"/>
+
+    </RelativeLayout>
+
+    <Button
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/order_now"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_below="@id/rl_total_container"/>
+
+</RelativeLayout>

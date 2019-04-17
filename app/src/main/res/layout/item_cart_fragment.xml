@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+            android:id="@+id/rl_foreground_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+        <ImageView
+                android:src="@drawable/sofaicon"
+                android:id="@+id/img_cart_item"
+                android:layout_width="115dp"
+                android:layout_height="115dp"
+                android:layout_marginEnd="10dp"/>
+
+        <TextView
+                android:layout_toEndOf="@id/img_cart_item"
+                android:id="@+id/txt_title_cart_item"
+                android:textColor="#1C1C1C"
+                android:fontFamily="@font/gotham_book"
+                android:text="Product Title"
+                android:textSize="35sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:fontFamily="@font/gotham_book"
+                android:text="(producer)"
+                android:textSize="30sp"
+                android:id="@+id/txt_category_cart_item"
+                android:layout_below="@id/txt_title_cart_item"
+                android:layout_toEndOf="@id/img_cart_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <!--<Spinner-->
+        <!--android:visibility="invisible"-->
+        <!--android:background="@drawable/select_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/spinner_item_count"-->
+        <!--android:layout_below="@id/txt_category_cart_item"-->
+        <!--android:layout_toEndOf="@id/img_cart_item"/>-->
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:gravity="end"
+                android:layout_alignParentEnd="true"
+                android:text="₹ 180"
+                android:id="@+id/txt_price_cart_item"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/img_cart_item"
+                android:layout_below="@id/txt_category_cart_item"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/rl_background_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:layout_marginEnd="10dp"
+                android:id="@+id/img_delete_cart_item"
+                android:src="@drawable/delete"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+</FrameLayout>
