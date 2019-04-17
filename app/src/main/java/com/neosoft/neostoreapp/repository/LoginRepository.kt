@@ -1,27 +1,23 @@
 package com.neosoft.neostoreapp.repository
 
 import android.app.Application
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import android.widget.Toast
-import com.google.gson.GsonBuilder
 import com.neosoft.neostoreapp.model.request.LoginRequest
-import com.neosoft.neostoreapp.model.response.LoginErrorResponse
 import com.neosoft.neostoreapp.model.response.LoginResponse
-import com.neosoft.neostoreapp.model.response.RegisterErrorResponse
 import com.neosoft.neostoreapp.network.ApiClient
-import com.neosoft.neostoreapp.network.LoginService
+import com.neosoft.neostoreapp.network.ApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class LoginRepository(application: Application) {
-    private val retrofitClient: LoginService = ApiClient.getRetrofitInstance().create(LoginService::class.java)
+    private val retrofitService: ApiService = ApiClient.getRetrofitInstance().create(ApiService::class.java)
     val context = application.applicationContext!!
 
     fun getLoginResponse(request: LoginRequest): MutableLiveData<LoginResponse> {
-        val response = retrofitClient.loginUser(request.email.toString(), request.password.toString())
+        val response = retrofitService.loginUser(request.email.toString(), request.password.toString())
 
         val mutabledata: MutableLiveData<LoginResponse> = MutableLiveData()
 

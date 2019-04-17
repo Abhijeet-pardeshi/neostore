@@ -153,4 +153,11 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onBackPressed() {
+        val loginIntent = Intent(this,LoginActivity::class.java)
+        finish()
+        startActivity(loginIntent)
+    }
+
 }

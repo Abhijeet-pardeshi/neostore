@@ -3,9 +3,11 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:background="@color/white"
-        android:layout_height="match_parent" android:orientation="vertical">
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
             android:layout_marginStart="13dp"
             android:layout_marginEnd="13dp"
             android:layout_gravity="top"
@@ -16,19 +18,145 @@
                 android:id="@+id/txt_title_detail"
                 android:textColor="@color/text_black"
                 android:fontFamily="@font/gotham_medium"
-                android:textSize="35sp"
+                android:textSize="30sp"
                 android:text="This is title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         <TextView
-                android:id="@+id/txt_category_detail"
+                android:fontFamily="@font/gotham_book"
                 android:layout_width="match_parent"
-                android:textSize="30sp"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_category_detail"
+                android:layout_below="@id/txt_title_detail"
+                android:textColor="#4f4f4f"
+                android:text="Category - Table"
+                android:textSize="25sp"/>
 
-                android:layout_height="wrap_content"/>
+        <TextView
+                android:fontFamily="@font/gotham_book"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/txt_category_detail"
+                android:layout_width="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_producer_detail"
+                android:textColor="#4f4f4f"
+                android:text="Producer Detail"
+                android:textSize="15sp"/>
 
-    </LinearLayout>
+
+        <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rb_rating_table"
+                android:numStars="5"
+                android:progressTint="@color/yellow"
+                android:stepSize="1"
+                android:scaleX="0.5"
+                android:padding="0dp"
+                android:layout_below="@id/txt_category_detail"
+                android:layout_alignParentEnd="true"
+                android:scaleY="0.5"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                android:rating="2"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_price_detail"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="20dp"
+                android:textSize="35sp"
+                android:textColor="@color/text_red"
+                android:text="Rs. 27390"
+                android:fontFamily="@font/gotham_medium"
+                android:layout_below="@id/txt_producer_detail"/>
+
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:scaleType="fitCenter"
+                android:padding="0dp"
+                android:src="@drawable/ic_share_36dp"
+                android:tint="@color/share_tint"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/txt_producer_detail"/>
+
+        <ImageView
+                android:src="@drawable/tableicon"
+                android:id="@+id/iv_large_pic_detail"
+                android:layout_width="250dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/txt_price_detail"/>
+
+        <RelativeLayout
+                android:id="@+id/rl_small_pics_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="30dp"
+                android:layout_below="@id/iv_large_pic_detail">
+
+            <ImageView
+                    android:src="@drawable/sofaicon"
+                    android:scaleType="fitXY"
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/iv_small_pic1_detail"
+                    android:layout_width="120dp"
+                    android:layout_height="90dp"/>
+
+            <ImageView
+                    android:src="@drawable/chairsicon"
+                    android:scaleType="fitXY"
+                    android:layout_marginStart="8dp"
+                    android:id="@+id/iv_small_pic2_detail"
+                    android:layout_width="120dp"
+                    android:layout_height="90dp"
+                    android:layout_toEndOf="@id/iv_small_pic1_detail"/>
+
+            <ImageView
+                    android:src="@drawable/cupboardicon"
+                    android:scaleType="fitXY"
+                    android:layout_marginStart="8dp"
+                    android:id="@+id/iv_small_pic3_detail"
+                    android:layout_width="120dp"
+                    android:layout_height="90dp"
+                    android:layout_toEndOf="@id/iv_small_pic2_detail"/>
+
+        </RelativeLayout>
+
+        <TextView
+                android:id="@+id/txt_desc_title_detail"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@id/rl_small_pics_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gotham_medium"
+                android:textSize="17sp"
+                android:textAllCaps="true"
+                android:textColor="#111111"
+                android:text="Description"/>
+
+        <TextView
+                android:id="@+id/txt_desc_info_detail"
+                android:layout_marginStart="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_desc_title_detail"
+                android:fontFamily="@font/gotham_medium"
+                android:textColor="#333333"
+                android:textSize="15sp"
+                android:text="This is a product description"
+        />
+
+    </RelativeLayout>
 
     <LinearLayout
             android:layout_marginStart="13dp"

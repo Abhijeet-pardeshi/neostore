@@ -7,17 +7,17 @@ import android.widget.Toast
 import com.neosoft.neostoreapp.model.response.RegisterResponse
 import com.neosoft.neostoreapp.model.request.RegisterRequest
 import com.neosoft.neostoreapp.network.ApiClient
-import com.neosoft.neostoreapp.network.RegisterService
+import com.neosoft.neostoreapp.network.ApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class RegisterRepository(application: Application) {
-    private var retrofitClient: RegisterService = ApiClient.getRetrofitInstance().create(RegisterService::class.java)
+    private var retrofitService: ApiService = ApiClient.getRetrofitInstance().create(ApiService::class.java)
     val context = application.applicationContext!!
 
     fun getRegResponse(request: RegisterRequest): MutableLiveData<RegisterResponse> {
-        val response = retrofitClient.registerUser(
+        val response = retrofitService.registerUser(
             request.firstName.toString(),
             request.lastName.toString(),
             request.email.toString(),
@@ -57,7 +57,7 @@ class RegisterRepository(application: Application) {
 //    }
 //
 //    companion object {
-//        class RegisterResponseAsyncTask(var retrofitClient: RegisterService): AsyncTask<RegisterRequest, Unit, MutableLiveData<RegisterResponse>>() {
+//        class RegisterResponseAsyncTask(var retrofitClient: ApiService): AsyncTask<RegisterRequest, Unit, MutableLiveData<RegisterResponse>>() {
 //            override fun doInBackground(vararg params: RegisterRequest?): MutableLiveData<RegisterResponse> {
 //                val request = params[0]
 //                val response = retrofitClient.registerUser(

@@ -44,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
             Observer<LoginResponse> { response ->
                 response.let {
                     val intent = Intent(this, DashBoardActivity::class.java)
+                    finish()
                     startActivity(intent)
                     Log.d("BaseResponse", response.toString())
                     Toast.makeText(this@LoginActivity, response?.userMessage, Toast.LENGTH_SHORT).show()

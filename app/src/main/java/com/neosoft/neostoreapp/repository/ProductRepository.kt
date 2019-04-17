@@ -5,16 +5,16 @@ import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import com.neosoft.neostoreapp.model.response.ProductResponse
 import com.neosoft.neostoreapp.network.ApiClient
-import com.neosoft.neostoreapp.network.RegisterService
+import com.neosoft.neostoreapp.network.ApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ProductRepository(application: Application) {
-    private val retrofitClient: RegisterService = ApiClient.getRetrofitInstance().create(RegisterService::class.java)
+    private val retrofitService: ApiService = ApiClient.getRetrofitInstance().create(ApiService::class.java)
 
     fun getProductListResponse(productCategoryId: String, mutableLiveData: MutableLiveData<ProductResponse>): MutableLiveData<ProductResponse> {
-        val response = retrofitClient.getProducts(productCategoryId)
+        val response = retrofitService.getProducts(productCategoryId)
 //        val mutableLiveData: MutableLiveData<ProductResponse> = MutableLiveData()
         response.enqueue(object : Callback<ProductResponse> {
 
