@@ -45,4 +45,6 @@
     <string name="total">TOTAL</string>
     <string name="rupees_symbol">₹</string>
     <string name="order_now">ORDER NOW</string>
+    <string name="enter_qty">Enter Qty</string>
+    <string name="submit">SUBMIT</string>
 </resources>

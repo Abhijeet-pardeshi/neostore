@@ -6,5 +6,6 @@ class Constants {
         const val TABLE_FRAGMENT = "TABLE FRAGMENT"
         const val CURRENT_IMG = "CURRENT IMAGE"
         const val PRODUCT_ID = "PRODUCT ID"
+        const val ACCESS_TOKEN = "ACCESS TOKEN"
     }
 }

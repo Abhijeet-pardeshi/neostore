@@ -4,4 +4,9 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <!--<style name="RatingBarStyle" parent="Widget.AppCompat.RatingBar">-->
+        <!--<item name="android:progressDrawable">@xml/ratingbar_selector</item>-->
+        <!--<item name="android:indeterminateDrawable">@xml/ratingbar_selector</item>-->
+    <!--</style>-->
 </resources>

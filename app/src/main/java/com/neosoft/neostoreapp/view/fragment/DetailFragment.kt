@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.neosoft.neostoreapp.R
 import com.neosoft.neostoreapp.model.request.DetailRequest
 import com.neosoft.neostoreapp.model.response.DetailImagesResponse
@@ -21,7 +22,11 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.item_image_detail.*
 
-class DetailFragment : Fragment(), DetailImagesAdapter.OnImageClickListener {
+class DetailFragment : Fragment(), DetailImagesAdapter.OnImageClickListener, QuantityFragment.OnQuantitySubmitListener {
+
+    override fun onQuantitySubmitted(count: Int) {
+        Toast.makeText(context, "$count", Toast.LENGTH_SHORT).show()
+    }
 
     private lateinit var detailViewModel: DetailViewModel
     private lateinit var imagesUrlsList: ArrayList<DetailImagesResponse>
@@ -41,14 +46,12 @@ class DetailFragment : Fragment(), DetailImagesAdapter.OnImageClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         getDetails()
+        val quantityFragment = QuantityFragment()
+        quantityFragment.setOnQuantityListener(this)
 
         btn_buy.setOnClickListener {
-            val cartFragment = CartFragment()
-            fragmentManager?.
-                beginTransaction()?.
-                replace(R.id.container, cartFragment)?.
-                addToBackStack(null)?.
-                commit()
+            val cartFragment = QuantityFragment()
+            fragmentManager?.beginTransaction()?.replace(R.id.container, cartFragment)?.addToBackStack(null)?.commit()
         }
 //
 //            when (imagesUrlsList.size) {

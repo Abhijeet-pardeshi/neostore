@@ -31,9 +31,14 @@
     <style name="NavigationItemStyle">
         <item name="android:fontFamily">@font/gotham_medium</item>
     </style>
-    
-    <style name="RatingBarStyle" parent="Widget.AppCompat.RatingBar">
-        <item name="android:progressDrawable">@drawable/ratingbar_selector</item>
+
+    <!--<style name="CustomRatingBar" parent="Widget.AppCompat.RatingBar">-->
+        <!--<item name="android:progressDrawable">@drawable/ratingbar_selector</item>-->
+        <!--<item name="android:indeterminateDrawable">@drawable/ratingbar_selector</item>-->
+    <!--</style>-->
+
+    <style name="CustomButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/btn_custom_white_bg</item>
     </style>
 
 </resources>

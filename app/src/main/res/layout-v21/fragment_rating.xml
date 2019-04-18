@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:padding="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+            android:layout_centerHorizontal="true"
+            android:text="Product Name"
+            android:id="@+id/txt_title_rating_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gotham_book"
+            android:textSize="35sp"
+            android:layout_marginBottom="30dp"
+            android:textColor="#2C2B2B"/>
+
+    <ImageView
+            android:id="@+id/img_product_rating_fragment"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/txt_title_rating_fragment"
+            android:layout_marginBottom="40dp"
+            android:layout_width="320dp"
+            android:layout_height="250dp"
+            android:src="@mipmap/ic_launcher"/>
+
+    <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingbar_rating_fragment"
+            android:numStars="5"
+            android:rating="2"
+            android:progressTint="@color/yellow"
+            android:layout_marginBottom="30dp"
+            android:isIndicator="true"
+            android:layout_below="@id/img_product_rating_fragment"
+            android:layout_centerHorizontal="true"/>
+
+
+    <Button
+            android:fontFamily="@font/gotham_medium"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:textSize="30sp"
+            android:text="@string/submit"
+            android:background="@drawable/btn_custom_red_bg"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingbar_rating_fragment"/>
+
+</RelativeLayout>

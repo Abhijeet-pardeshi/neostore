@@ -35,6 +35,9 @@ class DetailImagesAdapter(var imagesList: ArrayList<DetailImagesResponse>, var c
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, pos: Int) {
+
+
+
         Picasso.get().load(imagesList[pos].image).into(holder.detailImage)
         holder.itemView.isSelected = (selectedPos == pos)
     }

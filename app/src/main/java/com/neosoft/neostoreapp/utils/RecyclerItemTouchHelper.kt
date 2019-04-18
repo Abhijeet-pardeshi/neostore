@@ -48,6 +48,29 @@ class RecyclerItemTouchHelper constructor(
         val foregroundView: View = (viewHolder as CartItemAdapter.CartItemHolder).viewForeground
         getDefaultUIUtil().onDrawOver(canvas, recyclerView, foregroundView, dX, dY, actionState, isCurrentlyActive)
     }
+
+    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+        val foregroundView: View = (viewHolder as CartItemAdapter.CartItemHolder).viewForeground
+        getDefaultUIUtil().clearView(foregroundView)
+    }
+
+    override fun onChildDraw(
+        canvas: Canvas,
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        dX: Float,
+        dY: Float,
+        actionState: Int,
+        isCurrentlyActive: Boolean
+    ) {
+        val foregroundView: View = (viewHolder as CartItemAdapter.CartItemHolder).viewForeground
+        getDefaultUIUtil().onDraw(canvas, recyclerView, foregroundView, dX, dY, actionState, isCurrentlyActive)
+    }
+
+    override fun convertToAbsoluteDirection(flags: Int, layoutDirection: Int): Int {
+        return super.convertToAbsoluteDirection(flags, layoutDirection)
+    }
+
 //    private RecyclerItemTouchHelperListener listener;
 //
 //    public RecyclerItemTouchHelper(int dragDirs, int swipeDirs, RecyclerItemTouchHelperListener listener) {
