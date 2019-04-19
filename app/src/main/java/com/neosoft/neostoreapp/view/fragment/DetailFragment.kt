@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -46,12 +47,17 @@ class DetailFragment : Fragment(), DetailImagesAdapter.OnImageClickListener, Qua
         super.onViewCreated(view, savedInstanceState)
 
         getDetails()
-        val quantityFragment = QuantityFragment()
-        quantityFragment.setOnQuantityListener(this)
 
         btn_buy.setOnClickListener {
-            val cartFragment = QuantityFragment()
-            fragmentManager?.beginTransaction()?.replace(R.id.container, cartFragment)?.addToBackStack(null)?.commit()
+
+            val dialogBuilder = AlertDialog.Builder(context!!)
+            val dialogView = LayoutInflater.from(context).inflate(R.layout.fragment_quantity,rl_detail_container,false)
+            dialogBuilder.setView(dialogView)
+            dialogBuilder.create()
+
+            dialogBuilder.show()
+//            val cartFragment = QuantityFragment()
+//            fragmentManager?.beginTransaction()?.replace(R.id.container, cartFragment)?.addToBackStack(null)?.commit()
         }
 //
 //            when (imagesUrlsList.size) {
