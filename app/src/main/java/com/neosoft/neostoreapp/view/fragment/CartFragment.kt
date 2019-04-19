@@ -18,15 +18,10 @@ import com.neosoft.neostoreapp.view.adapter.CartItemAdapter
 import kotlinx.android.synthetic.main.fragment_cart.*
 import java.util.ArrayList
 
-class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelperListener,
-    QuantityFragment.OnQuantitySubmitListener {
-
-    override fun onQuantitySubmitted(count: Int) {
-
-    }
-
+class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
     private val cartItems: ArrayList<DemoCartItem>? = null
+    lateinit var bundle: Bundle
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_cart, container, false)
@@ -35,6 +30,7 @@ class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val cartItems = ArrayList<DemoCartItem>()
+        bundle = Bundle()
         cartItems.add(DemoCartItem("Title", "Category", 11))
         val cartItemAdapter = CartItemAdapter(cartItems, this.context!!)
 

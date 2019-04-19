@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import com.neosoft.neostoreapp.model.request.LoginRequest
 import com.neosoft.neostoreapp.model.response.LoginResponse
+import com.neosoft.neostoreapp.utils.Constants
 import com.neosoft.neostoreapp.utils.isNull
 import com.neosoft.neostoreapp.view.activity.DashBoardActivity
 import com.neosoft.neostoreapp.viewmodel.LoginViewModel
@@ -44,6 +45,7 @@ class LoginActivity : AppCompatActivity() {
             Observer<LoginResponse> { response ->
                 response.let {
                     val intent = Intent(this, DashBoardActivity::class.java)
+                    intent.putExtra(Constants.ACCESS_TOKEN, response?.data?.accessToken)
                     finish()
                     startActivity(intent)
                     Log.d("BaseResponse", response.toString())

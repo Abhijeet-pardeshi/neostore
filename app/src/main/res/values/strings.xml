@@ -47,4 +47,13 @@
     <string name="order_now">ORDER NOW</string>
     <string name="enter_qty">Enter Qty</string>
     <string name="submit">SUBMIT</string>
+
+    <string-array name="quantity_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
 </resources>

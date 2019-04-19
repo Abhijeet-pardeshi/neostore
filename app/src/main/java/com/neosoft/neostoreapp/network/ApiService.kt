@@ -121,7 +121,7 @@ interface ApiService {
     fun setRating(
         @Field("product_id") productId: String,
         @Field("rating") rating: String
-    )
+    ): Call<RatingResponse>
 
     /**
      * forgot the password

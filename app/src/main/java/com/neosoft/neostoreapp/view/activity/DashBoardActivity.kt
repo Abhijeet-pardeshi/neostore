@@ -13,30 +13,31 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.neosoft.neostoreapp.R
+import com.neosoft.neostoreapp.utils.Constants
 import com.neosoft.neostoreapp.utils.DrawerLocker
 import com.neosoft.neostoreapp.view.fragment.DashboardFragment
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.toolbar_home.*
 
 class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, DrawerLocker {
-    private var backStackChangeListener: FragmentManager.OnBackStackChangedListener =
-        FragmentManager.OnBackStackChangedListener {
-        }
+//    private var backStackChangeListener: FragmentManager.OnBackStackChangedListener =
+//        FragmentManager.OnBackStackChangedListener {
+//        }
 
     lateinit var toggle: ActionBarDrawerToggle
     private var isToolbarNavigationRegistered: Boolean = false
     private lateinit var drawerLayout: DrawerLayout
+    lateinit var accessToken: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
         supportFragmentManager.beginTransaction().add(R.id.container,DashboardFragment()).commit()
-
+        accessToken = intent.getStringExtra(Constants.ACCESS_TOKEN)
         Log.d("Status", "onCreate")
         drawerLayout = findViewById(R.id.drawer_layout)
         setSupportActionBar(toolbar)
-
         toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )

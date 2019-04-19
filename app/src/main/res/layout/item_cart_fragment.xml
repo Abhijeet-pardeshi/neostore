@@ -55,12 +55,12 @@
                 android:layout_height="wrap_content"/>
 
         <Spinner
-        android:background="@drawable/select_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner_item_count"
-        android:layout_below="@id/txt_category_cart_item"
-        android:layout_toEndOf="@id/img_cart_item"/>
+                android:background="@drawable/select_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_item_count"
+                android:layout_below="@id/txt_category_cart_item"
+                android:layout_toEndOf="@id/img_cart_item"/>
 
         <TextView
                 android:layout_width="wrap_content"

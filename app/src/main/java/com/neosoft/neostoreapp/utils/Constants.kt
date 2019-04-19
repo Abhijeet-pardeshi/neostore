@@ -7,5 +7,8 @@ class Constants {
         const val CURRENT_IMG = "CURRENT IMAGE"
         const val PRODUCT_ID = "PRODUCT ID"
         const val ACCESS_TOKEN = "ACCESS TOKEN"
+        const val PRODUCT_IMG = "PRODUCT IMAGE"
+        const val PRODUCT_TITLE = "PRODUCT TITLE"
+        const val QUANTITY_COUNT = "QUANTITY COUNT"
     }
 }

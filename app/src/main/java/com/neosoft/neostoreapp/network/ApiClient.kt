@@ -32,6 +32,7 @@ class ApiClient {
             val httpClient = OkHttpClient.Builder()
             httpClient.addInterceptor(loggingInterceptor)
                 .addNetworkInterceptor(StethoInterceptor())
+                .retryOnConnectionFailure(false)
 
 
             return httpClient.build()
