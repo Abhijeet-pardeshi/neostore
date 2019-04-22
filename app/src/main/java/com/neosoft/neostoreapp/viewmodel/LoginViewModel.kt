@@ -15,17 +15,17 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     private val loginRepository = LoginRepository(application)
 
     fun getLoginResponse(): LiveData<LoginResponse> {
-        if (mutableLiveData == null) {
-            mutableLiveData = MutableLiveData()
-            Log.e("Status", "Initializing mutable livedata")
-        }
-
         return mutableLiveData as LiveData<LoginResponse>
+    }
+
+    init {
+        mutableLiveData = MutableLiveData()
     }
 
     fun loginUser(request: LoginRequest) {
         //mutableLiveData!!.value = loginRepository.getLoginResponse(request).value
 //        mutableLiveData.postValue(loginRepository.getLoginResponse(request).value)
-        mutableLiveData?.value = loginRepository.getLoginResponse(request).value
+
+        loginRepository.getLoginResponse(request,mutableLiveData!!)
     }
 }

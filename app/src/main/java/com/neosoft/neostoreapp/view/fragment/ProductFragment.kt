@@ -25,6 +25,7 @@ class ProductFragment : Fragment(),ProductItemAdapter.OnProductClickListener {
     private var productsList: ArrayList<ProductResponseData> = arrayListOf()
     private lateinit var productViewModel: ProductViewModel
     private lateinit var productAdapter: ProductItemAdapter
+    private lateinit var accessToken: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +35,7 @@ class ProductFragment : Fragment(),ProductItemAdapter.OnProductClickListener {
         productResponseData?.let { productsList.add(it) }
         val bundle = arguments
         val pos = bundle?.getInt("Position", 0)
+        accessToken = bundle?.getString(Constants.ACCESS_TOKEN).toString()
         productViewModel.getProductList("$pos")
 
         // Inflate the layout for this fragment
@@ -59,6 +61,8 @@ class ProductFragment : Fragment(),ProductItemAdapter.OnProductClickListener {
             Log.d("Status", "getting Products")
 //            Log.d("Products", t.toString())
 
+            Log.d("Product VM", t.toString())
+
             productsList.clear()
             t?.data.let {
                 it?.forEach { product ->
@@ -75,6 +79,7 @@ class ProductFragment : Fragment(),ProductItemAdapter.OnProductClickListener {
         val bundle = Bundle()
         productId?.toInt()?.let {prodId->
             bundle.putInt(Constants.PRODUCT_ID, prodId) }
+        bundle.putString(Constants.ACCESS_TOKEN,accessToken)
         detailFragment.arguments = bundle
 
         fragmentManager

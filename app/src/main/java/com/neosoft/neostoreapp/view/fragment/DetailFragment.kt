@@ -2,6 +2,7 @@ package com.neosoft.neostoreapp.view.fragment
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.neosoft.neostoreapp.R
+import com.neosoft.neostoreapp.model.request.CartRequest
 import com.neosoft.neostoreapp.model.request.DetailRequest
 import com.neosoft.neostoreapp.model.request.SetRatingRequest
 import com.neosoft.neostoreapp.model.response.DetailImagesResponse
@@ -19,6 +21,7 @@ import com.neosoft.neostoreapp.model.response.DetailResponseData
 import com.neosoft.neostoreapp.model.response.RatingResponseData
 import com.neosoft.neostoreapp.utils.Constants
 import com.neosoft.neostoreapp.view.adapter.DetailImagesAdapter
+import com.neosoft.neostoreapp.viewmodel.AddCartViewModel
 import com.neosoft.neostoreapp.viewmodel.DetailViewModel
 import com.neosoft.neostoreapp.viewmodel.RatingViewModel
 import com.squareup.picasso.Picasso
@@ -28,6 +31,7 @@ class DetailFragment : Fragment(), DetailImagesAdapter.OnImageClickListener,
     QuantityFragment.OnQuantitySubmitListener, RatingFragment.OnRatingSubmitListener {
 
     private lateinit var detailViewModel: DetailViewModel
+    private lateinit var addCartViewModel: AddCartViewModel
     private lateinit var imagesUrlsList: ArrayList<DetailImagesResponse>
     private lateinit var details: DetailResponseData
     private lateinit var rating: RatingResponseData
@@ -35,13 +39,18 @@ class DetailFragment : Fragment(), DetailImagesAdapter.OnImageClickListener,
     lateinit var detailImagesAdapter: DetailImagesAdapter
     lateinit var ratingFragment: RatingFragment
     lateinit var quantityFragment: QuantityFragment
+    lateinit var sharedPreferences: SharedPreferences
+    lateinit var accessToken: String
 
     private lateinit var ratingViewModel: RatingViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         detailViewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
         ratingViewModel = ViewModelProviders.of(this).get(RatingViewModel::class.java)
+        addCartViewModel = ViewModelProviders.of(this).get(AddCartViewModel::class.java)
+        sharedPreferences = context?.getSharedPreferences(Constants.PREF_NAME, 0)!!
         val bundle = arguments
+        accessToken = sharedPreferences.getString(Constants.ACCESS_TOKEN,"")!!
         ratingFragment = RatingFragment()
         quantityFragment = QuantityFragment()
         productId = bundle?.getInt(Constants.PRODUCT_ID)
@@ -60,15 +69,12 @@ class DetailFragment : Fragment(), DetailImagesAdapter.OnImageClickListener,
 //            dialogBuilder.setView(dialogView)
 //            dialogBuilder.create()
 //
-//            dialogBuilder.show()
-
+//            dialogBuilder.show(
             showQuantityDialog()
         }
 
         btn_rate.setOnClickListener {
-
             showRatingDialog()
-
         }
 
         ratingViewModel.getRatingResponse().observe(this, Observer { ratingResponse ->
@@ -84,11 +90,18 @@ class DetailFragment : Fragment(), DetailImagesAdapter.OnImageClickListener,
                 Toast.makeText(context, ratingResponse.userMessage, Toast.LENGTH_SHORT).show()
             }
         })
+
+        addCartViewModel.getAddToCartResponse().observe(this, Observer { cartResponse ->
+            cartResponse?.userMessage.let {
+                Toast.makeText(context, cartResponse?.userMessage, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun getDetails() {
         detailViewModel.getDetailResponse().observe(this, Observer { product ->
             details = product?.data!!
+            Log.d("Detail VM", product.data.toString())
             loadDetails()
             loadImages()
         })
@@ -134,14 +147,18 @@ class DetailFragment : Fragment(), DetailImagesAdapter.OnImageClickListener,
     override fun onQauntitySubmit(quantity: Int) {
 
         val cartFragment = CartFragment()
+//        bundleArguments()
         val bundle = Bundle()
-        bundle.putInt(Constants.QUANTITY_COUNT,quantity)
+        bundle.putInt(Constants.QUANTITY_COUNT, quantity)
+        productId?.let { bundle.putInt(Constants.PRODUCT_ID, it) }
+        bundle.putString(Constants.ACCESS_TOKEN, accessToken)
         cartFragment.arguments = bundle
+        addProductToCart(CartRequest(accessToken, productId.toString(), quantity.toString()))
+        fragmentManager?.beginTransaction()?.replace(R.id.container, cartFragment)?.addToBackStack(null)?.commit()
+    }
 
-        fragmentManager?.
-            beginTransaction()?.
-            replace(R.id.container, cartFragment)?.
-            addToBackStack(null)?.commit()
+    private fun addProductToCart(cartRequest: CartRequest) {
+        addCartViewModel.addToCart(cartRequest)
     }
 
     private fun showRatingDialog() {

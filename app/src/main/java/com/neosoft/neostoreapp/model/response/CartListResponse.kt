@@ -2,15 +2,13 @@ package com.neosoft.neostoreapp.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class CartResponse(
+data class CartListResponse(
+
     @SerializedName("status")
     var status: String? = null,
 
-    @SerializedName("result")
-    var result: Boolean? = null,
-//
-//    @SerializedName("total_carts")
-//    var totalCarts: Int? = null,
+    @SerializedName("data")
+    var cartListResponseData: ArrayList<CartListResponseData>? = null,
 
     @SerializedName("message")
     var message: String? = null,

@@ -10,5 +10,6 @@ class Constants {
         const val PRODUCT_IMG = "PRODUCT IMAGE"
         const val PRODUCT_TITLE = "PRODUCT TITLE"
         const val QUANTITY_COUNT = "QUANTITY COUNT"
+        const val PREF_NAME = "MyPreferences"
     }
 }

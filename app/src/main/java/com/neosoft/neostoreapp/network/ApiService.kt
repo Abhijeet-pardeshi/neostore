@@ -76,7 +76,7 @@ interface ApiService {
     fun deleteCart(
         @Header("access_token") accessToken: String,
         @Field("product_id") productId: String
-    )
+    ): Call<CartResponse>
 
     /**
      * show the cart
@@ -84,7 +84,7 @@ interface ApiService {
     @GET("cart")
     fun getCartList(
         @Header("access_token") accessToken: String
-    )
+    ): Call<CartListResponse>
 
     /**
      * order the products

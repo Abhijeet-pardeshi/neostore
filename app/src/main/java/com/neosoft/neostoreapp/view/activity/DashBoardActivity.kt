@@ -27,15 +27,21 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     lateinit var toggle: ActionBarDrawerToggle
     private var isToolbarNavigationRegistered: Boolean = false
     private lateinit var drawerLayout: DrawerLayout
-    lateinit var accessToken: String
+    var accessToken: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        supportFragmentManager.beginTransaction().add(R.id.container,DashboardFragment()).commit()
         accessToken = intent.getStringExtra(Constants.ACCESS_TOKEN)
-        Log.d("Status", "onCreate")
+        val dashboardFragment = DashboardFragment()
+        val bundle = Bundle()
+        bundle.putString(Constants.ACCESS_TOKEN, accessToken)
+        dashboardFragment.arguments = bundle
+        supportFragmentManager.beginTransaction().add(R.id.container, dashboardFragment).commit()
+
+
+        Log.d("Token", accessToken)
         drawerLayout = findViewById(R.id.drawer_layout)
         setSupportActionBar(toolbar)
         toggle = ActionBarDrawerToggle(
@@ -44,7 +50,12 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        //switching between ham burger(drawer toggle and back button)
+        switchHamburger()
+
+        nav_view.setNavigationItemSelectedListener(this)
+    }
+
+    private fun switchHamburger() {
         supportFragmentManager.addOnBackStackChangedListener {
             if (supportFragmentManager.backStackEntryCount > 0) {
                 toggle.isDrawerIndicatorEnabled = false
@@ -56,12 +67,6 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 toggle.setToolbarNavigationClickListener { null }
             }
         }
-
-        nav_view.setNavigationItemSelectedListener(this)
-    }
-
-    override fun onStart() {
-        super.onStart()
     }
 
     override fun onBackPressed() {
@@ -169,7 +174,7 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     private fun getCurrentVisibleFragment(): Fragment {
         val fragments = this.supportFragmentManager.fragments
-        var visibleFragment: Fragment?= null
+        var visibleFragment: Fragment? = null
         fragments.forEach { fragment ->
             if (fragment != null && fragment.isVisible) {
                 visibleFragment = fragment

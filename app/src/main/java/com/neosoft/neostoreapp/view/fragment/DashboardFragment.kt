@@ -22,22 +22,24 @@ import java.util.*
 
 class DashboardFragment : Fragment(), DashboardItemAdapter.OnDashboardClickListener {
 
-    private var sliderImages = intArrayOf(R.drawable.slider_img1, R.drawable.slider_img2, R.drawable.slider_img3, R.drawable.slider_img4)
-    private var productImages = arrayListOf(R.drawable.tableicon, R.drawable.chairsicon, R.drawable.sofaicon, R.drawable.cupboardicon)
+    private var sliderImages =
+        intArrayOf(R.drawable.slider_img1, R.drawable.slider_img2, R.drawable.slider_img3, R.drawable.slider_img4)
+    private var productImages =
+        arrayListOf(R.drawable.tableicon, R.drawable.chairsicon, R.drawable.sofaicon, R.drawable.cupboardicon)
     private lateinit var productViewModel: ProductViewModel
     lateinit var swipeTimer: Timer
     var currentImage = 0
+    //    val accessToken = arguments?.getString(Constants.ACCESS_TOKEN)
     val imagesCount = sliderImages.size
     lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d("State", "onCreateView")
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
-        sharedPreferences = context?.getSharedPreferences("MyPreferences",0)!!
+        sharedPreferences = context?.getSharedPreferences(Constants.PREF_NAME, 0)!!
 
-
-        if (sharedPreferences.contains(Constants.CURRENT_IMG)){
-            val strImageCount = sharedPreferences.getString(Constants.CURRENT_IMG,"0")
+        if (sharedPreferences.contains(Constants.CURRENT_IMG)) {
+            val strImageCount = sharedPreferences.getString(Constants.CURRENT_IMG, "0")
             currentImage = strImageCount?.toInt()!!
             autoSwipeImages()
         } else {
@@ -91,6 +93,7 @@ class DashboardFragment : Fragment(), DashboardItemAdapter.OnDashboardClickListe
         val nextFragment = ProductFragment()
         val bundle = Bundle()
         bundle.putInt("Position", pos + 1)
+//        bundle.putString(Constants.ACCESS_TOKEN,accessToken)
         nextFragment.arguments = bundle
 
         fragmentManager
@@ -129,7 +132,7 @@ class DashboardFragment : Fragment(), DashboardItemAdapter.OnDashboardClickListe
         super.onDestroyView()
         Log.d("State", "onDestroyView")
         swipeTimer.cancel()
-        sharedPreferences.edit().putString(Constants.CURRENT_IMG,"$currentImage").apply()
+        sharedPreferences.edit().putString(Constants.CURRENT_IMG, "$currentImage").apply()
     }
 
     override fun onDestroy() {
@@ -142,8 +145,8 @@ class DashboardFragment : Fragment(), DashboardItemAdapter.OnDashboardClickListe
         Log.d("State", "onDetach")
     }
 
-    fun autoSwipeImages(){
-        Log.d("TAG","AUTO SWIPE")
+    fun autoSwipeImages() {
+        Log.d("TAG", "AUTO SWIPE")
         swipeTimer = Timer()
         swipeTimer.schedule(object : TimerTask() {
             override fun run() {

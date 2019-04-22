@@ -16,29 +16,27 @@ class LoginRepository(application: Application) {
     private val retrofitService: ApiService = ApiClient.getRetrofitInstance().create(ApiService::class.java)
     val context = application.applicationContext!!
 
-    fun getLoginResponse(request: LoginRequest): MutableLiveData<LoginResponse> {
+    fun getLoginResponse(request: LoginRequest, mutableLivedata: MutableLiveData<LoginResponse>): MutableLiveData<LoginResponse> {
         val response = retrofitService.loginUser(request.email.toString(), request.password.toString())
-
-        val mutabledata: MutableLiveData<LoginResponse> = MutableLiveData()
 
         response.enqueue(object : Callback<LoginResponse> {
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 Log.e("Failure", t.printStackTrace().toString())
-                mutabledata.value = null
+                mutableLivedata.value = null
             }
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
-                    Log.e("Success", response.body().toString())
-                    mutabledata.value = response.body()
+                    Log.e("Success", response.body()?.data.toString())
+                    mutableLivedata.value = response.body()
                 } else {
 //                    val gson = GsonBuilder().create()
 //                    val baseLoginResponse = gson.fromJson(response.errorBody()?.string(), LoginErrorResponse::class.java)
-
+                    mutableLivedata.value = null
                     Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show()
                 }
             }
         })
-        return mutabledata
+        return mutableLivedata
     }
 }

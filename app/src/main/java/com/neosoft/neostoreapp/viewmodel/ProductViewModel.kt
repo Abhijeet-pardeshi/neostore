@@ -20,10 +20,10 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun getProductList(productCategoryId: String){
-        mutableLiveData?.value = mutableLiveData?.let {
+        mutableLiveData?.let {
             productRepository.getProductListResponse(productCategoryId,
                 it
-            ).value
+            )
         }
     }
 }
