@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -18,6 +19,17 @@ import kotlinx.android.synthetic.main.item_cart_fragment.view.*
 class CartItemAdapter(var cartItemsList: ArrayList<CartListItem>, var context: Context) :
     RecyclerView.Adapter<CartItemAdapter.CartItemHolder>() {
     var quantity: Int? = null
+    var quantities: ArrayList<Int>? = null
+
+    interface OnQuantityChangeListener {
+        fun onQuantityChanged(quantity: String, productId: String, pos: Int)
+    }
+
+    var onQuantityChangeListener: OnQuantityChangeListener? = null
+
+    fun setQuantityChangeListener(onQuantityChangeListener: OnQuantityChangeListener) {
+        this.onQuantityChangeListener = onQuantityChangeListener
+    }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): CartItemHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_cart_fragment, p0, false)
@@ -25,35 +37,18 @@ class CartItemAdapter(var cartItemsList: ArrayList<CartListItem>, var context: C
     }
 
     override fun getItemCount(): Int {
-        Log.d("CartItems","${cartItemsList.size}")
+        Log.d("CartItems", "${cartItemsList.size}")
         return cartItemsList.size
     }
 
     override fun onBindViewHolder(p0: CartItemHolder, p1: Int) {
-//        p0.cartItemTitle.text = cartItemsList[p1].title
-//        p0.cartItemCategory.text = cartItemsList[p1].category
-//        p0.cartItemPrice.text = cartItemsList[p1].price.toString()
-
-
-        val quantities = arrayListOf<Int>()
-        for (num in 1..100){
-            quantities.add(num)
+        quantities = arrayListOf<Int>()
+        for (num in 1..8) {
+            quantities!!.add(num)
         }
         val spinnerAdapter = ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, quantities)
         p0.cartItemQuantity.adapter = spinnerAdapter
         bindData(p0, p1)
-
-        p0.cartItemQuantity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                quantity = quantities[position-1]
-                Log.d("Spinner",quantity.toString())
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-        }
     }
 
     private fun bindData(cartHolder: CartItemHolder, pos: Int) {
@@ -63,6 +58,40 @@ class CartItemAdapter(var cartItemsList: ArrayList<CartListItem>, var context: C
         cartHolder.cartItemTitle.text = cartItemsList[pos].cartItemName
         cartHolder.cartItemCategory.text = cartItemsList[pos].cartItemCategory
         cartHolder.cartItemPrice.text = cartItemsList[pos].cartItemTotal
+
+        var userSelect = false
+        cartHolder.cartItemQuantity.setOnTouchListener { v, event ->
+            userSelect = true
+            false
+        }
+
+        cartHolder.cartItemQuantity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                quantity = quantities[position-1]
+
+                if (userSelect) {
+                    Toast.makeText(context, "onItemSelect", Toast.LENGTH_SHORT).show()
+                    quantity = quantities?.get(position)
+                    onQuantityChangeListener.let { onQuantityChangeListener ->
+                        Log.d("QCL", "OnQuantityChangeListener")
+                        if (cartItemsList.size != 0) {
+                            onQuantityChangeListener?.onQuantityChanged(
+                                quantity.toString(),
+                                cartItemsList[pos].cartItemId!!,
+                                pos
+                            )
+                        }
+                    }
+                    Log.d("Spinner", quantity.toString())
+
+                    userSelect = false
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
     }
 
     inner class CartItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

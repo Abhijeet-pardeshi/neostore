@@ -27,8 +27,8 @@ class QuantityFragment : DialogFragment() {
         dialogView.btn_submit_quantity_fragment.setOnClickListener {
             val quantity = dialogView.edt_select_quantity_fragment.text.toString()
             if (quantity.isNotEmpty()) {
-                if (quantity.toInt() > 5) {
-                    dialogView.edt_select_quantity_fragment.error = "Select up to 5 quantities"
+                if (quantity.toInt() > 8) {
+                    dialogView.edt_select_quantity_fragment.error = "Quantity must be 1 to 8"
                 } else {
                     onQuantitySubmitListener = targetFragment as OnQuantitySubmitListener
                     onQuantitySubmitListener.onQauntitySubmit(quantity.toInt())

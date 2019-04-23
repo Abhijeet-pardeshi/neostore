@@ -52,16 +52,16 @@ class CartRepository(application: Application) {
         response.enqueue(object : Callback<CartResponse> {
             override fun onResponse(call: Call<CartResponse>, response: Response<CartResponse>) {
                 if (response.isSuccessful) {
-                    mutableLiveData.value = response.body()
+                    mutableLiveData.postValue(response.body())
                     Log.d("AddCart RS", response.body().toString())
                 } else {
-                    mutableLiveData.value = null
+                    mutableLiveData.postValue(null)
                     Log.d("AddCart RU", response.errorBody().toString())
                 }
             }
 
             override fun onFailure(call: Call<CartResponse>, t: Throwable) {
-                mutableLiveData.value = null
+                mutableLiveData.postValue(null)
                 Log.d("AddCart RF", t.message)
             }
 
@@ -80,21 +80,20 @@ class CartRepository(application: Application) {
 
             override fun onResponse(call: Call<CartResponse>, response: Response<CartResponse>) {
                 if (response.isSuccessful) {
-                    mutableLiveData.value = response.body()
+                    mutableLiveData.postValue(response.body())
                     Log.d("DeleteCart RS", response.body().toString())
                 } else {
-                    mutableLiveData.value = null
+                    mutableLiveData.postValue(null)
                     Log.d("DeleteCart RU", response.errorBody().toString())
                 }
             }
 
             override fun onFailure(call: Call<CartResponse>, t: Throwable) {
-                mutableLiveData.value = null
+                mutableLiveData.postValue(null)
                 Log.d("DeleteCart RF", t.message)
             }
 
         })
-
         return mutableLiveData
     }
 
@@ -102,7 +101,27 @@ class CartRepository(application: Application) {
         request: CartRequest,
         mutableLiveData: MutableLiveData<CartResponse>
     ): MutableLiveData<CartResponse> {
-//        val response =
+        val response = retrofitService.editCart(request.accessToken!!, request.productId!!, request.quantity!!)
+
+        response.enqueue(object : Callback<CartResponse> {
+
+            override fun onResponse(call: Call<CartResponse>, response: Response<CartResponse>) {
+                if (response.isSuccessful) {
+                    Log.d("CartVM RS", response.body().toString())
+                    mutableLiveData.value = response.body()
+                } else {
+                    Log.d("CartVM RU", response.errorBody().toString())
+                    mutableLiveData.value = null
+                }
+            }
+
+            override fun onFailure(call: Call<CartResponse>, t: Throwable) {
+                Log.d("CartVM RF", t.message)
+                mutableLiveData.value = null
+            }
+
+        })
+
         return mutableLiveData
     }
 }

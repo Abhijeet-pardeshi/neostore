@@ -62,6 +62,8 @@ class DetailFragment : Fragment(), DetailImagesAdapter.OnImageClickListener,
         super.onViewCreated(view, savedInstanceState)
         getDetails()
 
+        Log.d("DF State", "onViewCreated")
+
         btn_buy.setOnClickListener {
             //
 //            val dialogBuilder = AlertDialog.Builder(context!!)

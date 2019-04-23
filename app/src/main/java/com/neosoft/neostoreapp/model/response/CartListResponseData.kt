@@ -14,12 +14,6 @@ data class CartListResponseData(
     var quantity: String? = null,
 
     @SerializedName("product")
-    var product: CartListProductResponse? = null,
-
-    @SerializedName("count")
-    var count: String? = null,
-
-    @SerializedName("total")
-    var total: String? = null
+    var product: CartListProductResponse? = null
 
 )

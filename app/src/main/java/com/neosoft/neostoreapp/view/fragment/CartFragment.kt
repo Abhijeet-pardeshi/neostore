@@ -23,19 +23,22 @@ import com.neosoft.neostoreapp.utils.Constants
 import com.neosoft.neostoreapp.utils.RecyclerItemTouchHelper
 import com.neosoft.neostoreapp.view.adapter.CartItemAdapter
 import com.neosoft.neostoreapp.viewmodel.DeleteCartViewModel
+import com.neosoft.neostoreapp.viewmodel.EditCartViewModel
 import com.neosoft.neostoreapp.viewmodel.ListCartViewModel
 import kotlinx.android.synthetic.main.fragment_cart.*
-import java.util.ArrayList
+import java.util.*
 
-class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
+class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelperListener,
+    CartItemAdapter.OnQuantityChangeListener {
 
     private var cartItems: ArrayList<CartListItem>? = null
     var accessToken: String? = null
-    lateinit var listCartViewModel: ListCartViewModel
+    var productId: Int? = null
     lateinit var sharedPreferences: SharedPreferences
     lateinit var cartItemAdapter: CartItemAdapter
-    var productId: Int? = null
+    lateinit var listCartViewModel: ListCartViewModel
     lateinit var deleteCartViewModel: DeleteCartViewModel
+    lateinit var editCartViewModel: EditCartViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_cart, container, false)
@@ -47,22 +50,10 @@ class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
         sharedPreferences = context?.getSharedPreferences(Constants.PREF_NAME, 0)!!
         listCartViewModel = ViewModelProviders.of(this).get(ListCartViewModel::class.java)
         deleteCartViewModel = ViewModelProviders.of(this).get(DeleteCartViewModel::class.java)
+        editCartViewModel = ViewModelProviders.of(this).get(EditCartViewModel::class.java)
         accessToken = sharedPreferences.getString(Constants.ACCESS_TOKEN, "")
-        val quantity = arguments?.getInt(Constants.QUANTITY_COUNT)
-        val productId = arguments?.getInt(Constants.PRODUCT_ID)
 
         getCartList()
-
-        //listening for the data changes
-        listCartViewModel.getCartListResponse().observe(this, Observer { cartListResponse ->
-            Log.d("Cart VM:-", cartListResponse.toString())
-            cartListResponse?.let { populateCartList(it) }
-        })
-
-        deleteCartViewModel.getDeleteCartResponse().observe(this, Observer { deleteResponse ->
-            Log.d("Delete VM:-", deleteResponse.toString())
-            Toast.makeText(context, deleteResponse?.userMessage, Toast.LENGTH_SHORT).show()
-        })
 
         cartItemAdapter = CartItemAdapter(cartItems!!, this.context!!)
         rv_cart_fragment.apply {
@@ -72,13 +63,40 @@ class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
+        cartItemAdapter.setQuantityChangeListener(this)
         val itemTouchHelperCallback = RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this)
         ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(rv_cart_fragment)
+
+        deleteCartViewModel.getDeleteCartResponse().observe(this, Observer { deleteResponse ->
+            Log.d("Delete VM:-", deleteResponse.toString())
+            Toast.makeText(context, deleteResponse?.userMessage, Toast.LENGTH_SHORT).show()
+
+            getCartList()
+        })
+
+        editCartViewModel.getEditCartResponse().observe(this, Observer { editResponse ->
+            Log.d("Edit VM:-", editResponse.toString())
+            Toast.makeText(context, editResponse?.userMessage, Toast.LENGTH_SHORT).show()
+
+//            getCartList()
+        })
     }
 
     private fun populateCartList(cartListResponse: CartListResponse) {
+        cartItems?.clear()
         val response: CartListResponse? = cartListResponse
+        txt_total_price_cart.text = response?.total
         val responseData = response?.cartListResponseData
+
+        if (response != null) {
+            if (response.cartListResponseData == null) {
+                rl_total_container.visibility = View.GONE
+                rv_cart_fragment.visibility = View.GONE
+                btn_order_product.visibility = View.GONE
+                img_empty_cart_fragment.visibility = View.VISIBLE
+            }
+        }
+
         responseData.let {
             it?.forEach { cartItem ->
                 val quantityCount = cartItem.quantity
@@ -90,14 +108,20 @@ class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
                 val subTotal = responseProduct?.subTotal
                 Log.d("Cart VM", "$quantityCount $responseProduct $name $category $productImages $subTotal $id")
                 val singleCartItem = CartListItem(id, productImages, name, category, quantityCount, subTotal)
+                Log.d("Total CF", response?.total ?: "0")
                 cartItems?.add(singleCartItem)
-                cartItemAdapter.notifyDataSetChanged()
             }
         }
+        cartItemAdapter.notifyDataSetChanged()
     }
 
     private fun getCartList() {
         listCartViewModel.getCartList(CartRequest(accessToken!!))
+
+        listCartViewModel.getCartListResponse().observe(this, Observer { cartListResponse ->
+            Log.d("Cart VM:-", cartListResponse.toString())
+            cartListResponse?.let { populateCartList(it) }
+        })
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
@@ -105,10 +129,19 @@ class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
             val name = cartItems?.get(viewHolder.adapterPosition)?.cartItemName
             val id = cartItems?.get(viewHolder.adapterPosition)?.cartItemId
             Toast.makeText(context, "$name $id", Toast.LENGTH_SHORT).show()
-
             deleteCartViewModel.deleteCart(CartRequest(accessToken!!, id!!))
-            cartItems?.remove(cartItems?.get(position))
-            cartItemAdapter.notifyDataSetChanged()
         }
+    }
+
+//    override fun onQuantityChanged(quantity: String, productId: String, pos: Int) {
+    override fun onQuantityChanged(quantity: String, productId: String, pos: Int) {
+
+    Toast.makeText(context, quantity, Toast.LENGTH_SHORT).show()
+        editCartViewModel.editCart(CartRequest(accessToken!!, productId, quantity))
+        updateTotal(pos)
+    }
+
+    private fun updateTotal(pos: Int) {
+        getCartList()
     }
 }

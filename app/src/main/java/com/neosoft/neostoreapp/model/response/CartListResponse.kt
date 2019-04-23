@@ -10,10 +10,10 @@ data class CartListResponse(
     @SerializedName("data")
     var cartListResponseData: ArrayList<CartListResponseData>? = null,
 
-    @SerializedName("message")
-    var message: String? = null,
+    @SerializedName("count")
+    var count: String? = null,
 
-    @SerializedName("user_msg")
-    var userMessage: String? = null
+    @SerializedName("total")
+    var total: String? = null
 
 )

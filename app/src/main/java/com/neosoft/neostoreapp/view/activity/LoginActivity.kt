@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
@@ -58,19 +59,19 @@ class LoginActivity : AppCompatActivity() {
 //                openDashboard()
                 }
             })
-
-//        loginViewModel?.getRegResponse2()?.observe(
-//            this@LoginActivity,
-//            Observer<LoginResponse> {
-//                    response -> response.let {
-//                val intent = Intent(this,DashBoardActivity::class.java)
-//                startActivity(intent)
-//                Log.d("BaseResponse", response.toString())
-//                Toast.makeText(this@LoginActivity, response?.userMessage, Toast.LENGTH_SHORT).show()
-////                openDashboard()
-//            }
-//            })
-
+//
+////        loginViewModel?.getRegResponse2()?.observe(
+////            this@LoginActivity,
+////            Observer<LoginResponse> {
+////                    response -> response.let {
+////                val intent = Intent(this,DashBoardActivity::class.java)
+////                startActivity(intent)
+////                Log.d("BaseResponse", response.toString())
+////                Toast.makeText(this@LoginActivity, response?.userMessage, Toast.LENGTH_SHORT).show()
+//////                openDashboard()
+////            }
+////            })
+//
         edt_login_email.setText("test17@test.com")
         edt_login_password.setText("pass123")
     }
