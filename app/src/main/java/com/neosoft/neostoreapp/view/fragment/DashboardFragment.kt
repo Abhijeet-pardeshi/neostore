@@ -16,6 +16,7 @@ import com.neosoft.neostoreapp.R
 import com.neosoft.neostoreapp.utils.Constants
 import com.neosoft.neostoreapp.view.adapter.DashboardItemAdapter
 import com.neosoft.neostoreapp.view.adapter.DashViewPagerAdapter
+import com.neosoft.neostoreapp.viewmodel.AccDetailsViewModel
 import com.neosoft.neostoreapp.viewmodel.ProductViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import java.util.*
@@ -27,6 +28,7 @@ class DashboardFragment : Fragment(), DashboardItemAdapter.OnDashboardClickListe
     private var productImages =
         arrayListOf(R.drawable.tableicon, R.drawable.chairsicon, R.drawable.sofaicon, R.drawable.cupboardicon)
     private lateinit var productViewModel: ProductViewModel
+    private lateinit var accDetailViewModel: AccDetailsViewModel
     lateinit var swipeTimer: Timer
     var currentImage = 0
     //    val accessToken = arguments?.getString(Constants.ACCESS_TOKEN)
@@ -37,6 +39,9 @@ class DashboardFragment : Fragment(), DashboardItemAdapter.OnDashboardClickListe
         Log.d("State", "onCreateView")
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
         sharedPreferences = context?.getSharedPreferences(Constants.PREF_NAME, 0)!!
+        accDetailViewModel = ViewModelProviders.of(this).get(AccDetailsViewModel::class.java)
+
+//        loadCategories()
 
         if (sharedPreferences.contains(Constants.CURRENT_IMG)) {
             val strImageCount = sharedPreferences.getString(Constants.CURRENT_IMG, "0")
@@ -48,6 +53,10 @@ class DashboardFragment : Fragment(), DashboardItemAdapter.OnDashboardClickListe
 
         return inflater.inflate(R.layout.fragment_dashboard, container, false)
     }
+
+//    private fun loadCategories() {
+//        accDetailViewModel.getAccountDetails()
+//    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

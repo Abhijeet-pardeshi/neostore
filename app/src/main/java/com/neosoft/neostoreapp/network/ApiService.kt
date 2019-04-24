@@ -161,7 +161,7 @@ interface ApiService {
      * fetch account details
      */
     @GET("users/getUserData")
-    fun getUsersData(
+    fun getAccountDetails(
         @Header("access_token") accessToken: String
-    )
+    ): Call<AccountDetailsResponse>
 }

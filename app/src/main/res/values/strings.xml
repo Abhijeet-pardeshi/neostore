@@ -47,6 +47,13 @@
     <string name="order_now">ORDER NOW</string>
     <string name="enter_qty">Enter Qty</string>
     <string name="submit">SUBMIT</string>
+    <string name="city">CITY</string>
+    <string name="landmark">LANDMARK</string>
+    <string name="zipcode">ZIPCODE</string>
+    <string name="save_address">SAVE ADDRESS</string>
+    <string name="address">ADDRESS</string>
+    <string name="state">STATE</string>
+    <string name="country">COUNTRY</string>
 
     <string-array name="quantity_array">
         <item>1</item>

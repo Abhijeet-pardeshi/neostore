@@ -16,6 +16,7 @@ import com.neosoft.neostoreapp.model.response.CartResponse
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_cart_fragment.view.*
 
+
 class CartItemAdapter(var cartItemsList: ArrayList<CartListItem>, var context: Context) :
     RecyclerView.Adapter<CartItemAdapter.CartItemHolder>() {
     var quantity: Int? = null
@@ -54,10 +55,19 @@ class CartItemAdapter(var cartItemsList: ArrayList<CartListItem>, var context: C
     private fun bindData(cartHolder: CartItemHolder, pos: Int) {
         quantity = cartItemsList[pos].cartItemQuantity?.toInt()
         Picasso.get().load(cartItemsList[pos].cartItemImage).into(cartHolder.cartItemImage)
-        quantity?.let { cartHolder.cartItemQuantity.setSelection(it - 1) }
+        quantity?.let { cartHolder.cartItemQuantity.setSelection(it - 1,false) }
         cartHolder.cartItemTitle.text = cartItemsList[pos].cartItemName
         cartHolder.cartItemCategory.text = cartItemsList[pos].cartItemCategory
         cartHolder.cartItemPrice.text = cartItemsList[pos].cartItemTotal
+
+
+        /*val spnValue = cartHolder.cartItemQuantity.getSelectedItem().toString()
+
+        onQuantityChangeListener?.onQuantityChanged(
+            spnValue,
+            cartItemsList[pos].cartItemId!!,
+            pos
+        )*/
 
         var userSelect = false
         cartHolder.cartItemQuantity.setOnTouchListener { v, event ->
@@ -68,12 +78,10 @@ class CartItemAdapter(var cartItemsList: ArrayList<CartListItem>, var context: C
         cartHolder.cartItemQuantity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 //                quantity = quantities[position-1]
-
                 if (userSelect) {
                     Toast.makeText(context, "onItemSelect", Toast.LENGTH_SHORT).show()
                     quantity = quantities?.get(position)
                     onQuantityChangeListener.let { onQuantityChangeListener ->
-                        Log.d("QCL", "OnQuantityChangeListener")
                         if (cartItemsList.size != 0) {
                             onQuantityChangeListener?.onQuantityChanged(
                                 quantity.toString(),
@@ -82,14 +90,12 @@ class CartItemAdapter(var cartItemsList: ArrayList<CartListItem>, var context: C
                             )
                         }
                     }
-                    Log.d("Spinner", quantity.toString())
-
                     userSelect = false
                 }
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
             }
         }
     }

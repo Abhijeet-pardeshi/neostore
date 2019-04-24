@@ -107,16 +107,13 @@ class CartRepository(application: Application) {
 
             override fun onResponse(call: Call<CartResponse>, response: Response<CartResponse>) {
                 if (response.isSuccessful) {
-                    Log.d("CartVM RS", response.body().toString())
                     mutableLiveData.value = response.body()
                 } else {
-                    Log.d("CartVM RU", response.errorBody().toString())
                     mutableLiveData.value = null
                 }
             }
 
             override fun onFailure(call: Call<CartResponse>, t: Throwable) {
-                Log.d("CartVM RF", t.message)
                 mutableLiveData.value = null
             }
 

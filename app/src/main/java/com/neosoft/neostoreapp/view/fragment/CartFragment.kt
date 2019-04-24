@@ -26,6 +26,10 @@ import com.neosoft.neostoreapp.viewmodel.DeleteCartViewModel
 import com.neosoft.neostoreapp.viewmodel.EditCartViewModel
 import com.neosoft.neostoreapp.viewmodel.ListCartViewModel
 import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelperListener,
@@ -63,6 +67,16 @@ class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
+        btn_order_product.setOnClickListener {
+            val addAddressFragment = AddAddressFragment()
+
+            fragmentManager?.
+                beginTransaction()?.
+                replace(R.id.container, addAddressFragment)?.
+                addToBackStack(null)
+                ?.commit()
+        }
+
         cartItemAdapter.setQuantityChangeListener(this)
         val itemTouchHelperCallback = RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this)
         ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(rv_cart_fragment)
@@ -75,7 +89,6 @@ class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
         })
 
         editCartViewModel.getEditCartResponse().observe(this, Observer { editResponse ->
-            Log.d("Edit VM:-", editResponse.toString())
             Toast.makeText(context, editResponse?.userMessage, Toast.LENGTH_SHORT).show()
 
 //            getCartList()
@@ -106,9 +119,7 @@ class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
                 val category = responseProduct?.productCategory
                 val productImages = responseProduct?.productImages
                 val subTotal = responseProduct?.subTotal
-                Log.d("Cart VM", "$quantityCount $responseProduct $name $category $productImages $subTotal $id")
                 val singleCartItem = CartListItem(id, productImages, name, category, quantityCount, subTotal)
-                Log.d("Total CF", response?.total ?: "0")
                 cartItems?.add(singleCartItem)
             }
         }
@@ -119,7 +130,6 @@ class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
         listCartViewModel.getCartList(CartRequest(accessToken!!))
 
         listCartViewModel.getCartListResponse().observe(this, Observer { cartListResponse ->
-            Log.d("Cart VM:-", cartListResponse.toString())
             cartListResponse?.let { populateCartList(it) }
         })
     }
@@ -133,15 +143,34 @@ class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
         }
     }
 
-//    override fun onQuantityChanged(quantity: String, productId: String, pos: Int) {
+    //    override fun onQuantityChanged(quantity: String, productId: String, pos: Int) {
     override fun onQuantityChanged(quantity: String, productId: String, pos: Int) {
+        runBlocking {
+            val editJob = async { editCartViewModel.editCart(CartRequest(accessToken!!, productId, quantity)) }
+            val editResult = editJob.await()
+            delay(1000)
+            editResult.run { updateTotal(pos) }
+        }
 
-    Toast.makeText(context, quantity, Toast.LENGTH_SHORT).show()
-        editCartViewModel.editCart(CartRequest(accessToken!!, productId, quantity))
-        updateTotal(pos)
     }
 
     private fun updateTotal(pos: Int) {
-        getCartList()
+        listCartViewModel.getCartList(CartRequest(accessToken!!))
+        listCartViewModel.getCartListResponse().observe(this, Observer { cartListResponse ->
+            txt_total_price_cart.text = cartListResponse?.total
+            val cartListResponseData = cartListResponse?.cartListResponseData
+            val quantity = cartListResponseData?.get(pos)?.quantity
+            val product = cartListResponseData?.get(pos)?.product
+            val id = product?.id
+            val name = product?.name
+            val category = product?.productCategory
+            val productImages = product?.productImages
+            val subTotal = product?.subTotal
+            val singleCartItem = CartListItem(id, productImages, name, category, quantity, subTotal)
+            if (cartItems != null) {
+                cartItems?.set(pos, singleCartItem)
+            }
+            cartItemAdapter.notifyDataSetChanged()
+        })
     }
 }

@@ -4,8 +4,15 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 28
+
+    packagingOptions {
+        exclude 'META-INF/atomicfu.kotlin_module'
+    }
+
     defaultConfig {
         applicationId "com.neosoft.neostoreapp"
         minSdkVersion 19
@@ -51,5 +58,16 @@ dependencies {
 
     //circleImageView dependency
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    //coroutine dependency
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0'
+
+    //room database dependencies
+    implementation "android.arch.persistence.room:runtime:1.1.1"
+    kapt "android.arch.persistence.room:compiler:1.1.1"
+
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation 'android.arch.lifecycle:runtime:1.1.1'
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 
 }
