@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginTop="?attr/actionBarSize"
+                tools:context=".view.fragment.AddAddressFragment">
+
+    <TextView
+            android:id="@+id/txt_cat_address_add_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/gotham_medium"
+            android:gravity="center_vertical"
+            android:text="@string/address"/>
+
+    <EditText
+            android:id="@+id/edt_address_add_fragment"
+            android:layout_below="@id/txt_cat_address_add_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="0dp"
+            android:gravity="center"
+            android:maxLines="3"
+            android:layout_centerHorizontal="true"
+            android:text="Neosoft Technologies, Sayani Road, Parel, Mumbai."
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/gotham_book"/>
+
+    <TextView
+            android:id="@+id/txt_cat_city_add_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:fontFamily="@font/gotham_medium"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/city"
+            android:textSize="25sp"
+            android:layout_below="@id/edt_address_add_fragment"/>
+
+    <EditText
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edt_landmark_add_fragment"
+            android:fontFamily="@font/gotham_book"
+            android:textSize="20sp"
+            android:hint="@string/landmark"
+            android:layout_below="@id/txt_cat_city_add_fragment"
+            android:textColor="@color/black"/>
+
+    <LinearLayout
+            android:id="@+id/ll_address_container"
+            android:paddingBottom="20dp"
+            android:layout_below="@id/edt_landmark_add_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content" android:orientation="vertical">
+
+            <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/city"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:fontFamily="@font/gotham_medium"/>
+            
+            <EditText
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/gotham_book"
+                    android:textColor="@color/black"
+                    android:text="MUMBAI"/>
+
+            <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/zipcode"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:fontFamily="@font/gotham_medium"/>
+
+            <EditText
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/gotham_book"
+                    android:textColor="@color/black"
+                    android:text="10066"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:layout_height="wrap_content" android:orientation="vertical">
+
+            <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/state"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:fontFamily="@font/gotham_medium"/>
+
+            <EditText
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/gotham_book"
+                    android:textColor="@color/black"
+                    android:text="MAHARASHTRA"/>
+
+            <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/country"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:fontFamily="@font/gotham_medium"/>
+
+            <EditText
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/gotham_book"
+                    android:textColor="@color/black"
+                    android:text="INDIA"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+            android:text="@string/save_address"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_below="@id/ll_address_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+</RelativeLayout>
