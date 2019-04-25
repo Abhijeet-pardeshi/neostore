@@ -51,14 +51,22 @@ class AddAddressFragment : Fragment() {
             )
         )
 
-        getAddresses()
+        getAddressesByUser("122332324")
     }
 
-    private fun getAddresses() {
+    private fun getAddressesByUser(userName: String) {
         arrAddress = addressListViewModel.getAllAddresses()
 
         arrAddress.forEach { address ->
             Log.d("Address", "$address")
         }
     }
+
+//    private fun getAddresses() {
+//        arrAddress = addressListViewModel.getAllAddresses()
+//
+//        arrAddress.forEach { address ->
+//            Log.d("Address", "$address")
+//        }
+//    }
 }

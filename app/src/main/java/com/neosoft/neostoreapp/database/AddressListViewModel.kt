@@ -10,7 +10,11 @@ class AddressListViewModel(application: Application) : AndroidViewModel(applicat
         return addressRepository.getAllAddresses()
     }
 
-    fun saveAddress(address: Address){
+    fun saveAddress(address: Address) {
         addressRepository.saveAddress(address)
+    }
+
+    fun getAddressesByUser(userName: String): ArrayList<Address> {
+        return addressRepository.getAddressesByUser(userName)
     }
 }

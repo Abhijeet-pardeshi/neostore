@@ -26,10 +26,7 @@ import com.neosoft.neostoreapp.viewmodel.DeleteCartViewModel
 import com.neosoft.neostoreapp.viewmodel.EditCartViewModel
 import com.neosoft.neostoreapp.viewmodel.ListCartViewModel
 import kotlinx.android.synthetic.main.fragment_cart.*
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import java.util.*
 
 class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelperListener,
@@ -70,10 +67,7 @@ class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
         btn_order_product.setOnClickListener {
             val addAddressFragment = AddAddressFragment()
 
-            fragmentManager?.
-                beginTransaction()?.
-                replace(R.id.container, addAddressFragment)?.
-                addToBackStack(null)
+            fragmentManager?.beginTransaction()?.replace(R.id.container, addAddressFragment)?.addToBackStack(null)
                 ?.commit()
         }
 
@@ -145,13 +139,14 @@ class CartFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
 
     //    override fun onQuantityChanged(quantity: String, productId: String, pos: Int) {
     override fun onQuantityChanged(quantity: String, productId: String, pos: Int) {
-        runBlocking {
+        GlobalScope.launch(Dispatchers.Main) {
             val editJob = async { editCartViewModel.editCart(CartRequest(accessToken!!, productId, quantity)) }
             val editResult = editJob.await()
             delay(1000)
-            editResult.run { updateTotal(pos) }
+            editResult.run {
+                updateTotal(pos)
+            }
         }
-
     }
 
     private fun updateTotal(pos: Int) {

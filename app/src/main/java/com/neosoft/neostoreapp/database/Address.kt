@@ -12,4 +12,7 @@ data class Address(
     var zipCode: String,
     var state: String,
     var country: String
-)
+){
+    @PrimaryKey ( autoGenerate = true)
+    var id : Int ? = null
+}
