@@ -4,7 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import com.neosoft.neostoreapp.model.request.AccountRequest
-import com.neosoft.neostoreapp.model.response.AccountDetailsResponse
+import com.neosoft.neostoreapp.model.response.AccDetailsResponse
 import com.neosoft.neostoreapp.network.ApiClient
 import com.neosoft.neostoreapp.network.ApiService
 import retrofit2.Call
@@ -16,22 +16,25 @@ class AccountRepository(application: Application) {
 
     fun getAccountDetailsResponse(
         request: AccountRequest,
-        mutableLiveData: MutableLiveData<AccountDetailsResponse>
+        mutableLiveData: MutableLiveData<AccDetailsResponse>
     ) {
         val response = request.accessToken?.let { retrofitService.getAccountDetails(it) }
 
-        response?.enqueue(object : Callback<AccountDetailsResponse> {
+        response?.enqueue(object : Callback<AccDetailsResponse> {
 
-            override fun onResponse(call: Call<AccountDetailsResponse>, response: Response<AccountDetailsResponse>) {
+            override fun onResponse(call: Call<AccDetailsResponse>, response: Response<AccDetailsResponse>) {
                 if (response.isSuccessful) {
                     Log.d("AccountRS", response.body().toString())
+                    mutableLiveData.value = response.body()
                 } else {
                     Log.d("AccountRU", response.errorBody().toString())
+                    mutableLiveData.value = null
                 }
             }
 
-            override fun onFailure(call: Call<AccountDetailsResponse>, t: Throwable) {
+            override fun onFailure(call: Call<AccDetailsResponse>, t: Throwable) {
                 Log.d("AccountRF", t.message)
+                mutableLiveData.value = null
             }
 
         })

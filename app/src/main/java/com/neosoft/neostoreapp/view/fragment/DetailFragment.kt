@@ -54,7 +54,6 @@ class DetailFragment : Fragment(), DetailImagesAdapter.OnImageClickListener,
         ratingFragment = RatingFragment()
         quantityFragment = QuantityFragment()
         productId = bundle?.getInt(Constants.PRODUCT_ID)
-        detailViewModel.getDetails(DetailRequest(this.productId!!))
         return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 
@@ -101,6 +100,8 @@ class DetailFragment : Fragment(), DetailImagesAdapter.OnImageClickListener,
     }
 
     private fun getDetails() {
+        detailViewModel.getDetails(DetailRequest(this.productId!!))
+
         detailViewModel.getDetailResponse().observe(this, Observer { product ->
             details = product?.data!!
             Log.d("Detail VM", product.data.toString())
@@ -177,6 +178,7 @@ class DetailFragment : Fragment(), DetailImagesAdapter.OnImageClickListener,
     override fun onRatingSubmit(rating: Float) {
         val request = SetRatingRequest(productId.toString(), rating.toString())
         ratingViewModel.setRating(request)
+        getDetails()
     }
 }
 

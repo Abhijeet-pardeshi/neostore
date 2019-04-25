@@ -4,17 +4,12 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.neosoft.neostoreapp.DemoCartItem
 import com.neosoft.neostoreapp.R
 import com.neosoft.neostoreapp.model.CartListItem
-import com.neosoft.neostoreapp.model.request.CartRequest
-import com.neosoft.neostoreapp.model.response.CartResponse
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_cart_fragment.view.*
 
 
 class CartItemAdapter(var cartItemsList: ArrayList<CartListItem>, var context: Context) :

@@ -36,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
 
         ib_add.setOnClickListener {
             val registerIntent = Intent(this@LoginActivity, RegisterActivity::class.java)
+            finish()
             startActivity(registerIntent)
         }
 

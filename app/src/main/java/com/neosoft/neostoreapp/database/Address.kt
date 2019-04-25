@@ -5,7 +5,7 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "addresses_table")
 data class Address(
-    var userName: String,
+    var userEmail: String,
     var fullAddress: String,
     var landmark: String,
     var city: String,

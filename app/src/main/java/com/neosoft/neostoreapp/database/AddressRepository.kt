@@ -23,9 +23,9 @@ class AddressRepository(application: Application) {
         SaveAddressAsyncTask(addressDao).execute(address)
     }
 
-    fun getAddressesByUser(userName: String): ArrayList<Address> {
-        val getAddressesByUserAsyncTask = GetAddressesByUserAsyncTask(addressDao).execute(userName)
-        return getAddressesByUserAsyncTask.get()
+    fun getAddressesByUserEmail(userEmail: String): ArrayList<Address> {
+        val getAddressesByUserEmailAsyncTask = GetAddressesByUserEmailAsyncTask(addressDao).execute(userEmail)
+        return getAddressesByUserEmailAsyncTask.get()
     }
 
     companion object {
@@ -43,10 +43,10 @@ class AddressRepository(application: Application) {
             }
         }
 
-        private class GetAddressesByUserAsyncTask(var addressDao: AddressDao) :
+        private class GetAddressesByUserEmailAsyncTask(var addressDao: AddressDao) :
             AsyncTask<String, Unit, ArrayList<Address>>() {
             override fun doInBackground(vararg params: String?): ArrayList<Address> {
-                return addressDao.getAddressesByUser(params[0]!!) as ArrayList<Address>
+                return addressDao.getAddressesByUserEmail(params[0]!!) as ArrayList<Address>
             }
 
         }

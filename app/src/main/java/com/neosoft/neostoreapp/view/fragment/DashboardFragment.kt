@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.arch.lifecycle.Observer
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.GridLayoutManager
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.neosoft.neostoreapp.R
+import com.neosoft.neostoreapp.model.request.AccountRequest
 import com.neosoft.neostoreapp.utils.Constants
 import com.neosoft.neostoreapp.view.adapter.DashboardItemAdapter
 import com.neosoft.neostoreapp.view.adapter.DashViewPagerAdapter
@@ -20,18 +22,20 @@ import com.neosoft.neostoreapp.viewmodel.AccDetailsViewModel
 import com.neosoft.neostoreapp.viewmodel.ProductViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class DashboardFragment : Fragment(), DashboardItemAdapter.OnDashboardClickListener {
 
+    private var productImages =
+        intArrayOf(R.drawable.tableicon, R.drawable.chairsicon, R.drawable.sofaicon, R.drawable.cupboardicon)
     private var sliderImages =
         intArrayOf(R.drawable.slider_img1, R.drawable.slider_img2, R.drawable.slider_img3, R.drawable.slider_img4)
-    private var productImages =
-        arrayListOf(R.drawable.tableicon, R.drawable.chairsicon, R.drawable.sofaicon, R.drawable.cupboardicon)
+    private var categoryImages = ArrayList<String>()
     private lateinit var productViewModel: ProductViewModel
     private lateinit var accDetailViewModel: AccDetailsViewModel
     lateinit var swipeTimer: Timer
     var currentImage = 0
-    //    val accessToken = arguments?.getString(Constants.ACCESS_TOKEN)
+    var accessToken: String? = null
     val imagesCount = sliderImages.size
     lateinit var sharedPreferences: SharedPreferences
 
@@ -40,8 +44,11 @@ class DashboardFragment : Fragment(), DashboardItemAdapter.OnDashboardClickListe
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
         sharedPreferences = context?.getSharedPreferences(Constants.PREF_NAME, 0)!!
         accDetailViewModel = ViewModelProviders.of(this).get(AccDetailsViewModel::class.java)
+        if (sharedPreferences.contains(Constants.ACCESS_TOKEN)) {
+            accessToken = sharedPreferences.getString(Constants.ACCESS_TOKEN, "")
+        }
 
-//        loadCategories()
+        loadCategories()
 
         if (sharedPreferences.contains(Constants.CURRENT_IMG)) {
             val strImageCount = sharedPreferences.getString(Constants.CURRENT_IMG, "0")
@@ -54,9 +61,9 @@ class DashboardFragment : Fragment(), DashboardItemAdapter.OnDashboardClickListe
         return inflater.inflate(R.layout.fragment_dashboard, container, false)
     }
 
-//    private fun loadCategories() {
-//        accDetailViewModel.getAccountDetails()
-//    }
+    private fun loadCategories() {
+        accDetailViewModel.getAccountDetails(AccountRequest(accessToken!!))
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -68,11 +75,30 @@ class DashboardFragment : Fragment(), DashboardItemAdapter.OnDashboardClickListe
         super.onViewCreated(view, savedInstanceState)
 
         Log.d("State", "onViewCreated")
+        accDetailViewModel.getAccountDetailsResponse().observe(this, Observer { response ->
+            val accountDetailsData = response?.data
+            val userEmail = accountDetailsData?.userDataResponse?.email
+            if (!sharedPreferences.contains(Constants.USER_EMAIL)) {
+                sharedPreferences.edit().putString(Constants.USER_EMAIL, userEmail).apply()
+            }
+            val productCategories = accountDetailsData?.productCategoriesResponse
+            productCategories?.forEach { category ->
+                val iconImage = category.iconImage
+                iconImage?.let { categoryImages.add(it) }
+            }
+        })
+
+//        accDetailViewModel.getAccountDetailsResponse().observe(this, Observer { accountDetailsResponse->
+//            var accountDetailsData = accountDetailsResponse?.data
+//            var productCategories = accountDetailsData?.productCategoriesResponse
+//            pro
+//        })
 
         val viewPagerAdapter = DashViewPagerAdapter(context!!, sliderImages)
         viewPager.adapter = viewPagerAdapter
 
-        val dashboardAdapter = DashboardItemAdapter(context!!, productImages)
+//        val dashboardAdapter = DashboardItemAdapter(context!!, categoryImages)
+        val dashboardAdapter = DashboardItemAdapter(context!!, categoryImages)
         rv_products_home.layoutManager = GridLayoutManager(context!!, 2)
         rv_products_home.adapter = dashboardAdapter
         dashboardAdapter.setProductClickListener(this)

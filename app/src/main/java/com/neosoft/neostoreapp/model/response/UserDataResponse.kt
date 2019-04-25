@@ -2,7 +2,7 @@ package com.neosoft.neostoreapp.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class AccountDetailsResponseData(
+data class UserDataResponse(
 
     @SerializedName("id")
     var id: String? = null,

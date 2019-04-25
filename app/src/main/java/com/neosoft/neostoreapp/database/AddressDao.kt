@@ -13,6 +13,6 @@ interface AddressDao {
     @Query("SELECT * FROM addresses_table")
     fun getAllAddresses(): List<Address>
 
-    @Query("SELECT * FROM addresses_table WHERE userName LIKE :userName")
-    fun getAddressesByUser(userName: String): List<Address>
+    @Query("SELECT * FROM addresses_table WHERE userEmail LIKE :userEmail")
+    fun getAddressesByUserEmail(userEmail: String): List<Address>
 }

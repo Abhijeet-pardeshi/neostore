@@ -54,6 +54,8 @@
     <string name="address">ADDRESS</string>
     <string name="state">STATE</string>
     <string name="country">COUNTRY</string>
+    <string name="shipping_address">Shipping Address</string>
+    <string name="place_order">PLACE ORDER</string>
 
     <string-array name="quantity_array">
         <item>1</item>

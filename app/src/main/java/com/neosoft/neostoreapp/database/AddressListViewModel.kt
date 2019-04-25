@@ -14,7 +14,7 @@ class AddressListViewModel(application: Application) : AndroidViewModel(applicat
         addressRepository.saveAddress(address)
     }
 
-    fun getAddressesByUser(userName: String): ArrayList<Address> {
-        return addressRepository.getAddressesByUser(userName)
+    fun getAddressesByUserEmail(userEmail: String): ArrayList<Address> {
+        return addressRepository.getAddressesByUserEmail(userEmail)
     }
 }

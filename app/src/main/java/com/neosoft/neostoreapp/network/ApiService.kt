@@ -163,5 +163,5 @@ interface ApiService {
     @GET("users/getUserData")
     fun getAccountDetails(
         @Header("access_token") accessToken: String
-    ): Call<AccountDetailsResponse>
+    ): Call<AccDetailsResponse>
 }

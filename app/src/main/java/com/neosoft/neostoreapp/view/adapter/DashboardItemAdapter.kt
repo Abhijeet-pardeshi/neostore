@@ -8,8 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.neosoft.neostoreapp.R
+import com.squareup.picasso.Picasso
 
-class DashboardItemAdapter(private var context: Context, var productsList: ArrayList<Int>) :
+class DashboardItemAdapter(private var context: Context, var productsList: ArrayList<String>) :
     RecyclerView.Adapter<DashboardItemAdapter.ProductHolder>() {
 
     interface OnDashboardClickListener {
@@ -32,7 +33,7 @@ class DashboardItemAdapter(private var context: Context, var productsList: Array
     }
 
     override fun onBindViewHolder(holder: ProductHolder, pos: Int) {
-        holder.productImage.setImageResource(productsList[pos])
+        Picasso.get().load(productsList.get(pos)).into(holder.productImage)
     }
 
     inner class ProductHolder(itemView: View) : ViewHolder(itemView) {

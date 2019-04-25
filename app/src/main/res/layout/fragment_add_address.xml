@@ -6,7 +6,7 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:layout_marginTop="?attr/actionBarSize"
-                tools:context=".view.fragment.AddAddressFragment">
+                tools:context=".view.fragment.AddressFragment">
 
     <TextView
             android:id="@+id/txt_cat_address_add_fragment"
@@ -80,6 +80,7 @@
                     android:fontFamily="@font/gotham_medium"/>
             
             <EditText
+                    android:id="@+id/edt_city_address_fragment"
                     android:singleLine="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -99,6 +100,7 @@
                     android:fontFamily="@font/gotham_medium"/>
 
             <EditText
+                    android:id="@+id/edt_zipcode_address_fragment"
                     android:singleLine="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -126,6 +128,7 @@
                     android:fontFamily="@font/gotham_medium"/>
 
             <EditText
+                    android:id="@+id/edt_state_address_fragment"
                     android:singleLine="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -145,6 +148,7 @@
                     android:fontFamily="@font/gotham_medium"/>
 
             <EditText
+                    android:id="@+id/edt_country_address_fragment"
                     android:singleLine="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -158,6 +162,7 @@
     </LinearLayout>
 
     <Button
+            android:id="@+id/btn_save_address"
             android:text="@string/save_address"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_below="@id/ll_address_container"
