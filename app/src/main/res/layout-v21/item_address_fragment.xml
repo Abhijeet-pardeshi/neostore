@@ -1,24 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        app:cardCornerRadius="8dp"
+        app:cardUseCompatPadding="true"
+        android:layout_height="wrap_content">
 
-    <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:buttonTint="@color/faint_grey"/>
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <TextView
+        <RadioButton
+                android:background="@drawable/radiobtn_selector"
+                android:layout_centerVertical="true"
+                android:id="@+id/rb_address_fragment"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-        />
+                android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+                android:layout_toEndOf="@id/rb_address_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:singleLine="true"
+                    android:layout_toStartOf="@id/ib_remove_address_fragment"
+                    android:id="@+id/txt_uname_address_fragment"
+                    android:fontFamily="@font/gotham_medium"
+                    android:textSize="27sp"
+                    android:textColor="@color/black"
+                    android:text="Glen Dmello"/>
+
+            <ImageButton
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/ib_remove_address_fragment"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:src="@drawable/ic_remove_black"
+                    android:background="@android:color/transparent"/>
+
+
+            <TextView
+                    android:id="@+id/txt_full_address_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:maxLines="3"
+                    android:gravity="center_vertical"
+                    android:text="NeoSoft Technologies 4th Floor, The Ruby, 29, Senapati Bapat Marg, Dadar(West) Mumbai- 400-028.INDIA"
+                    android:fontFamily="@font/gotham_book"
+                    android:textColor="@color/black"
+                    android:layout_below="@id/txt_uname_address_fragment"
+                    android:textSize="22sp"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
-</RelativeLayout>
+</android.support.v7.widget.CardView>

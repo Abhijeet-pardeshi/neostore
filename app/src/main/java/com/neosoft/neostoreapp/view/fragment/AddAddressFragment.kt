@@ -21,6 +21,7 @@ class AddAddressFragment : Fragment() {
     lateinit var arrAddress: ArrayList<Address>
     var accessToken: String? = null
     var userEmail: String? = null
+    var userName: String? = null
     lateinit var sharedPreferences: SharedPreferences
 
 //    override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +63,7 @@ class AddAddressFragment : Fragment() {
         sharedPreferences = context?.getSharedPreferences(Constants.PREF_NAME, 0)!!
         accessToken = sharedPreferences.getString(Constants.ACCESS_TOKEN, "")
         userEmail = sharedPreferences.getString(Constants.USER_EMAIL, "")
+        userName = sharedPreferences.getString(Constants.USER_NAME, "")
 
         btn_save_address.setOnClickListener {
             val city = edt_city_address_fragment.text.toString()
@@ -70,7 +72,8 @@ class AddAddressFragment : Fragment() {
             val state = edt_state_address_fragment.text.toString()
             val country = edt_country_address_fragment.text.toString()
             val fullAddress = edt_address_add_fragment.text.toString()
-            val address = Address(this.userEmail!!, fullAddress, landmark, city, zipCode, state, country)
+            val address =
+                Address(this.userEmail!!, this.userName!!, fullAddress, landmark, city, zipCode, state, country)
             saveAddress(address)
 //            addressListViewModel.saveAddress(
 //                Address(
@@ -88,16 +91,27 @@ class AddAddressFragment : Fragment() {
 
     private fun saveAddress(address: Address) {
         addressListViewModel.saveAddress(address)
-        getAddressesByUserEmail(userEmail!!)
+//        getAddressesByUserEmail(userEmail!!)
+
+        startAddressFragment()
     }
 
-    private fun getAddressesByUserEmail(userEmail: String) {
-        arrAddress = addressListViewModel.getAddressesByUserEmail(userEmail)
-
-        arrAddress.forEach { address ->
-            Log.d("Address", "$address")
-        }
+    private fun startAddressFragment() {
+        val addressFragment = AddressFragment()
+        fragmentManager?.
+            beginTransaction()?.
+            replace(R.id.container,addressFragment)?.
+            addToBackStack(null)?.
+            commit()
     }
+
+//    private fun getAddressesByUserEmail(userEmail: String) {
+//        arrAddress = addressListViewModel.getAddressesByUserEmail(userEmail)
+//
+//        arrAddress.forEach { address ->
+//            Log.d("Address", "$address")
+//        }
+//    }
 
 //    private fun getAddresses() {
 //        arrAddress = addressListViewModel.getAllAddresses()

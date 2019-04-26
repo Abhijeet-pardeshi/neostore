@@ -17,4 +17,9 @@ class AddressListViewModel(application: Application) : AndroidViewModel(applicat
     fun getAddressesByUserEmail(userEmail: String): ArrayList<Address> {
         return addressRepository.getAddressesByUserEmail(userEmail)
     }
+
+    fun deleteAddressById(id: Int) {
+        return addressRepository.deleteAddressById(id)
+    }
+
 }

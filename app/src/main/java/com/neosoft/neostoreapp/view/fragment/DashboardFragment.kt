@@ -78,8 +78,12 @@ class DashboardFragment : Fragment(), DashboardItemAdapter.OnDashboardClickListe
         accDetailViewModel.getAccountDetailsResponse().observe(this, Observer { response ->
             val accountDetailsData = response?.data
             val userEmail = accountDetailsData?.userDataResponse?.email
+            val userName = accountDetailsData?.userDataResponse?.userName
             if (!sharedPreferences.contains(Constants.USER_EMAIL)) {
                 sharedPreferences.edit().putString(Constants.USER_EMAIL, userEmail).apply()
+            }
+            if (!sharedPreferences.contains(Constants.USER_NAME)) {
+                sharedPreferences.edit().putString(Constants.USER_NAME, userName).apply()
             }
             val productCategories = accountDetailsData?.productCategoriesResponse
             productCategories?.forEach { category ->

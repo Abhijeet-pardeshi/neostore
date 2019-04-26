@@ -28,6 +28,10 @@ class AddressRepository(application: Application) {
         return getAddressesByUserEmailAsyncTask.get()
     }
 
+    fun deleteAddressById(id: Int) {
+        DeleteAddressbyIdAsyncTask(addressDao).execute(id)
+    }
+
     companion object {
         private class GetAddressAsyncTask(var addressDao: AddressDao) : AsyncTask<Unit, Unit, ArrayList<Address>>() {
             override fun doInBackground(vararg params: Unit?): ArrayList<Address> {
@@ -47,6 +51,13 @@ class AddressRepository(application: Application) {
             AsyncTask<String, Unit, ArrayList<Address>>() {
             override fun doInBackground(vararg params: String?): ArrayList<Address> {
                 return addressDao.getAddressesByUserEmail(params[0]!!) as ArrayList<Address>
+            }
+        }
+
+        private class DeleteAddressbyIdAsyncTask(var addressDao: AddressDao) :
+            AsyncTask<Int, Unit, Unit>() {
+            override fun doInBackground(vararg params: Int?) {
+                return addressDao.deleteAddressById(params[0]!!)
             }
 
         }

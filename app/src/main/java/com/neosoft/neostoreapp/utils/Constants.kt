@@ -12,5 +12,6 @@ class Constants {
         const val QUANTITY_COUNT = "QUANTITY COUNT"
         const val PREF_NAME = "MyPreferences"
         const val USER_EMAIL = "USER EMAIL"
+        const val USER_NAME = "USER NAME"
     }
 }
